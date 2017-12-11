@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.rameshmkll.church.MainActivity">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
-</android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:layout_centerInParent="true"
+        android:id="@+id/btGoogle"
+      android:gravity="center"
+        android:text="Sign in with Google"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_below="@+id/btGoogle"
+        android:id="@+id/btFb"
+        android:text="Sign in with Faceboook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+<TextView
+    android:id="@+id/tvSkip"
+    android:layout_alignParentBottom="true"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Skip SignIn"/>
+</RelativeLayout>
