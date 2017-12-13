@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "540727913701",
+    "firebase_url": "https://church-99d40.firebaseio.com",
+    "project_id": "church-99d40",
+    "storage_bucket": "church-99d40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540727913701:android:b821e96fddc78075",
+        "android_client_info": {
+          "package_name": "com.rameshmklll.church"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540727913701-9ipm12spr6bfp1pu6pon96u4frjd4kvk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rameshmklll.church",
+            "certificate_hash": "b4b3e262267d94d4f28d2515b1adb2c3f191422a"
+          }
+        },
+        {
+          "client_id": "540727913701-sdn0u3nqodknr4d50ouga9f8d91opm0i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBku5eUgDlzSjuQqWBnZxideo3wWYxjZIU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540727913701-sdn0u3nqodknr4d50ouga9f8d91opm0i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
