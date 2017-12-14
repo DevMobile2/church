@@ -61,7 +61,7 @@
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         FacebookSdk.sdkInitialize(getApplicationContext());
+//         FacebookSdk.sdkInitialize(getApplicationContext());
          setContentView(R.layout.activity_main);
          Log.d(TAG, "onCreate");
 
@@ -110,8 +110,6 @@
           mFirebaseUser = mFirebaseAuth.getCurrentUser();
          if (mFirebaseUser!=null) {
              provider_type = mFirebaseUser.getProviders().get(0);
-
-//                if (provider_type.equals(PreferencesData.getProviderType(activity)))
 
            if (PreferencesData.getLoggedIn(activity))
                 updateUI(mFirebaseUser);
@@ -236,7 +234,6 @@
 //                             startActivity(new Intent(MainActivity.this, DashBoard.class));
 
                          } else {
-                             PreferencesData.putProviderType(activity, mFirebaseUser.getProviders().get(0));
                              PreferencesData.putLoggedIn(activity, true);
                              startActivity(new Intent(MainActivity.this, DashBoard.class));
                              finish();
@@ -255,7 +252,7 @@
                      @Override
                      public void onComplete(@NonNull Task<AuthResult> task) {
                          if (task.isSuccessful()) {
-                             PreferencesData.putProviderType( activity, mFirebaseUser.getProviders().get(0));
+//                             PreferencesData.putProviderType( activity, mFirebaseUser.getProviders().get(0));
 
                              // Sign in success, update UI with the signed-in user's information
                              Log.d(TAG, "signInWithCredential:success");

@@ -33,5 +33,6 @@ dependencies {
 //    compile 'com.firebaseui:firebase-ui-database:3.0.0'
     compile 'com.google.android.gms:play-services-auth:11.6.2'
     compile 'com.facebook.android:facebook-android-sdk:4.29.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 apply plugin: 'com.google.gms.google-services'

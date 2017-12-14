@@ -12,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
@@ -20,6 +23,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
@@ -33,7 +40,8 @@ public class DashBoard extends AppCompatActivity
     private String mPhotoUrl;
     private GoogleApiClient mGoogleApiClient;
     private DashBoard activity;
-
+    private TextView tv_user, tv_email;
+    private ImageView iv_profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +57,12 @@ public class DashBoard extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+         tv_user =  headerView.findViewById(R.id.tv_user);
+         tv_email  = headerView.findViewById(R.id.tv_email);
+        iv_profile = headerView.findViewById(R.id.iv_profile);
        boolean is_skip = getIntent().getBooleanExtra("is_skip", false);
 
         // Set default username is anonymous.
@@ -60,6 +71,7 @@ public class DashBoard extends AppCompatActivity
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
         if (!is_skip)
         if (mFirebaseUser == null) {
             // Not signed in, launch the Sign In activity
@@ -68,9 +80,16 @@ public class DashBoard extends AppCompatActivity
             return;
         } else {
             mUsername = mFirebaseUser.getDisplayName();
+            tv_user.setText(mUsername);
+            tv_email.setText(mFirebaseUser.getEmail());
             if (mFirebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
+
+                setProfilePic(mPhotoUrl);
+
             }
+            PreferencesData.putProviderType(activity, mFirebaseUser.getProviders().get(0));
+
         }
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -79,9 +98,28 @@ public class DashBoard extends AppCompatActivity
                 .build();
     }
 
+    private void setProfilePic(String mPhotoUrl) {
+
+        Picasso.with(activity)
+                .load(mPhotoUrl)
+//                .resize(60, 50)
+//                .centerCrop()
+                .into(iv_profile, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        //code
+                    }
+                    @Override
+                    public void onError() {
+                        //code
+                    }
+                });
+
+    }
+
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -108,7 +146,9 @@ public class DashBoard extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.sign_out_menu:
 
-                if (PreferencesData.getProviderType(activity).equalsIgnoreCase("com.google")) {
+                String b = PreferencesData.getProviderType(activity);
+
+                if ( b.equalsIgnoreCase("google.com")) {
                     mFirebaseAuth.signOut();
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                     mUsername = ANONYMOUS;

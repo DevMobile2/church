@@ -13,6 +13,7 @@ public class PreferencesData {
     private static SharedPreferences preferences;
     public static final String SHARED_PREF="credentials";
     private static SharedPreferences.Editor editor;
+    private static final String IS_LOGGED_IN = "is_logged_in";
 
     public static synchronized void initPrefs(Context context) {
         if (preferences == null) {
@@ -24,16 +25,15 @@ public class PreferencesData {
         if(preferences!=null)
             return preferences;
         else
-            throw new RuntimeException(
-                    "Prefs class not correctly instantiated please call Prefs.iniPrefs(context) in the Application class onCreate.");
+            throw new RuntimeException("Prefs class not correctly instantiated please call Prefs.iniPrefs(context) in the Application class onCreate.");
     }
 
-    public static void putProviderType(Context con,String token)
+    public static void putProviderType(Context con, String type)
     {
         if(preferences==null)
             preferences=con.getSharedPreferences(SHARED_PREF, 0);
         editor=preferences.edit();
-        editor.putString(PREF_PROVIDER_TYPE, token);
+        editor.putString(PREF_PROVIDER_TYPE, type);
         editor.apply();
     }
 
@@ -44,11 +44,11 @@ public class PreferencesData {
         return preferences.getString(PREF_PROVIDER_TYPE, "");
     }
 
-    public static void putLoggedIn(Context con,boolean bool) {
+    public static void putLoggedIn(Context con, boolean bool) {
         if(preferences==null)
             preferences=con.getSharedPreferences(SHARED_PREF, 0);
         editor=preferences.edit();
-        editor.putBoolean(PREF_PROVIDER_TYPE, bool);
+        editor.putBoolean(IS_LOGGED_IN, bool);
         editor.apply();
     }
 
@@ -56,7 +56,7 @@ public class PreferencesData {
     {
         if(preferences==null)
             preferences = con.getSharedPreferences(SHARED_PREF, 0);
-        return preferences.getBoolean(PREF_PROVIDER_TYPE, false);
+        return preferences.getBoolean(IS_LOGGED_IN, false);
     }
 
 
