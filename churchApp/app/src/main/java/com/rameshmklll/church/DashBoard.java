@@ -178,6 +178,9 @@ public class DashBoard extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "pendingReports")
                     .addToBackStack("Interviewer").commit();
         } else if (id == R.id.bible) {
+            fragment=new BibleFragment();
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "pendingReports")
+                    .addToBackStack("Interviewer").commit();
 
         } else if (id == R.id.contact) {
 

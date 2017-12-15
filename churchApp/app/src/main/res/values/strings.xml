@@ -11,4 +11,32 @@
     <string name="facebook_app_id">1960320220849137</string>
     <string name="fb_login_protocol_scheme">fb1960320220849137</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="chapters">
+        <item>CHAPTER 1</item>
+        <item>CHAPTER 2</item>
+        <item>CHAPTER 3</item>
+        <item>CHAPTER 4</item>
+        <item>CHAPTER 5</item>
+        <item>CHAPTER 6</item>
+        <item>CHAPTER 7</item>
+        <item>CHAPTER 8</item>
+        <item>CHAPTER 9</item>
+        <item>CHAPTER 10</item>
+    </string-array>
+    <string-array name="VERSIONS">
+        <item>VERSIONS 1</item>
+        <item>VERSIONS 2</item>
+        <item>VERSIONS 3</item>
+        <item>VERSIONS 4</item>
+        <item>VERSIONS 5</item>
+        <item>VERSIONS 6</item>
+        <item>VERSIONS 7</item>
+        <item>VERSIONS 8</item>
+        <item>VERSIONS 9</item>
+        <item>VERSIONS 10</item>
+    </string-array>
+
 </resources>

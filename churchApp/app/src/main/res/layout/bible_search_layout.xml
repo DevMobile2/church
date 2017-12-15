@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+   <Spinner
+       android:entries="@array/chapters"
+       android:layout_margin="@dimen/activity_vertical_margin"
+       android:id="@+id/spChapter"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"></Spinner>
+
+    <Spinner
+        android:entries="@array/VERSIONS"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:id="@+id/spVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+    <Button
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="search"/>
+</LinearLayout>
