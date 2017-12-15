@@ -1,8 +1,10 @@
 package com.rameshmklll.church;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,7 @@ import android.widget.Toast;
 public class Gallery extends Fragment {
 
     GridView androidGridView;
-  View mv;
+    View mv;
     Integer[] imageIDs = {
             R.drawable.mt, R.drawable.mt, R.drawable.mt,
             R.drawable.mt, R.drawable.mt, R.drawable.mt,
@@ -47,7 +49,11 @@ public class Gallery extends Fragment {
         androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent,
                                     View v, int position, long id) {
-                Toast.makeText(getActivity(), "Grid Item " + (position + 1) + " Selected", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Grid Item " + (position ) + " Selected", Toast.LENGTH_LONG).show();
+                Intent intent =  new Intent(getActivity(), ImageFullView.class);
+                intent.putExtra("pos", position);
+                getActivity().startActivity(intent);
+
             }
         });
         return mv;

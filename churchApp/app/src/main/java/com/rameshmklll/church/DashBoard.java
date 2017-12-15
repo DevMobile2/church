@@ -47,16 +47,16 @@ public class DashBoard extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         activity= this;
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -156,7 +156,6 @@ public class DashBoard extends AppCompatActivity
                 }else {
                     mFirebaseAuth.signOut();
                     LoginManager.getInstance().logOut();
-//                    FirebaseAuth.getInstance().signOut();
                 }
                 PreferencesData.putLoggedIn(this, false);
                 startActivity(new Intent(this, MainActivity.class));
@@ -184,7 +183,9 @@ public class DashBoard extends AppCompatActivity
             Intent intent=new Intent(this,XlReaderActivity.class);
             startActivity(intent);
         } else if (id == R.id.gallery) {
-
+            fragment=new Gallery();
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "Gallery")
+                    .addToBackStack("Gallery").commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -14,8 +14,8 @@ import com.synnapps.carouselview.ImageListener;
 
 
 public class FirstPage extends Fragment {
-View mv;
-Activity activity;
+    View mv;
+    Activity activity;
     CarouselView carouselView;
 
     int[] sampleImages = {R.drawable.mt, R.drawable.mt, R.drawable.mt, R.drawable.mt, R.drawable.mt};
