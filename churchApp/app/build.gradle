@@ -12,10 +12,17 @@ android {
     }
     buildTypes {
         release {
+            multiDexEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    defaultConfig {
+
+        multiDexEnabled true
+
+    }
+
 }
 
 dependencies {
@@ -27,7 +34,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'org.apache.poi:poi-ooxml:3.17'
 
+    compile 'com.synnapps:carouselview:0.1.4'
+    compile 'com.fasterxml:aalto-xml:1.0.0'
     compile 'com.google.firebase:firebase-auth:11.6.2'
     // Firebase UI
 //    compile 'com.firebaseui:firebase-ui-database:3.0.0'

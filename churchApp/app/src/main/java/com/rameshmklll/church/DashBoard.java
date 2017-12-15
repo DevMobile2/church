@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,11 +27,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.Objects;
-
 public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
-
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    android.support.v4.app.Fragment fragment = null;
     private String TAG= "DashBoard";
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
@@ -172,14 +172,18 @@ public class DashBoard extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
+        if (id == R.id.worship_timings) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            fragment=new WorshipTimingsFrag();
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "pendingReports")
+                    .addToBackStack("Interviewer").commit();
+        } else if (id == R.id.bible) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.contact) {
 
-        } else if (id == R.id.nav_manage) {
+            Intent intent=new Intent(this,XlReaderActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.gallery) {
 
         }
 
