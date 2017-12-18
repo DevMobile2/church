@@ -18,20 +18,19 @@ public class ImageFullView extends AppCompatActivity {
     private CarouselView carouselView;
     int[] sampleImages = {R.drawable.mt, R.drawable.mt, R.drawable.mt, R.drawable.mt, R.drawable.mt,
             R.drawable.mt, R.drawable.mt, R.drawable.mt, R.drawable.mt, R.drawable.mt};
-    private int position;
+    private int pos;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_fullview_layout);
-        position = getIntent().getIntExtra("pos",-1);
+        pos = getIntent().getIntExtra("pos",-1);
 
         carouselView = findViewById(R.id.carousel_view);
 
         carouselView.setPageCount(sampleImages.length);
-        cd [cd .length - 1]
         ImageListener imageListener = new ImageListener() {
             @Override
-            public void setImageForPosition(int positio, ImageView imageView) {
+            public void setImageForPosition(int position, ImageView imageView) {
                 imageView.setImageResource(sampleImages[position]);
             }
         };

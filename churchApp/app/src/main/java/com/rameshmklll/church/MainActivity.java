@@ -1,7 +1,10 @@
  package com.rameshmklll.church;
 
+ import android.app.ActionBar;
  import android.content.Intent;
-import android.os.Bundle;
+ import android.graphics.Color;
+ import android.graphics.drawable.ColorDrawable;
+ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -58,16 +61,19 @@ import com.google.firebase.auth.GoogleAuthProvider;
          setContentView(R.layout.activity_main);
          Log.d(TAG, "onCreate");
 
+//         ActionBar actionBar = getActionBar();
+//         actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED)); // set your desired color
+
          activity = this;
-        skip=findViewById(R.id.tvSkip);
-        skip.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+         skip=findViewById(R.id.tvSkip);
+         skip.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
             Intent intent=new Intent(MainActivity.this,DashBoard.class);
             intent.putExtra("is_skip", true);
             startActivity(intent);
-        }
-        });
+          }
+         });
 
          btGoogle = findViewById(R.id.btGoogle);
          btFacebook =  findViewById(R.id.btFb);
