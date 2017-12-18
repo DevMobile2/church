@@ -106,11 +106,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
            if (PreferencesData.getLoggedIn(activity))
                 updateUI(mFirebaseUser);
-
          }
-
-
-
      }
 
      private void updateUI(FirebaseUser currentUser) {
@@ -118,16 +114,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
          Toast.makeText(this, " Logged in..", Toast.LENGTH_SHORT).show();
          startActivity(new Intent(this, DashBoard.class));
      }
-
-
-//     @Override
-//     public boolean onOptionsItemSelected(MenuItem item) {
-//         switch (item.getItemId()) {
-//
-//             default:
-//                 return super.onOptionsItemSelected(item);
-//         }
-//     }
 
      @Override
      public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

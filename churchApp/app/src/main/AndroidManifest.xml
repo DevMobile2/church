@@ -46,6 +46,7 @@
         <activity android:name=".XlReaderActivity"/>
         <activity android:name=".ContactUs"/>
         <activity android:name=".HomeScreen"/>
+        <activity android:name=".ImageFullView"/>
     </application>
 
 </manifest>
