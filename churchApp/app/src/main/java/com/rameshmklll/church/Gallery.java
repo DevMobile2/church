@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +20,12 @@ public class Gallery extends Fragment {
     GridView androidGridView;
     View mv;
     Integer[] imageIDs = {
-            R.drawable.mt, R.drawable.mt, R.drawable.mt,
-            R.drawable.mt, R.drawable.mt, R.drawable.mt,
-            R.drawable.mt, R.drawable.mt, R.drawable.mt,
-            R.drawable.mt, R.drawable.mt, R.drawable.mt,
-            R.drawable.mt, R.drawable.mt, R.drawable.mt,
-            R.drawable.mt, R.drawable.mt, R.drawable.mt,
+            R.drawable.c1, R.drawable.c2, R.drawable.c1,
+            R.drawable.c1, R.drawable.c2, R.drawable.c1,
+            R.drawable.c1, R.drawable.c2, R.drawable.c2,
+            R.drawable.c1, R.drawable.c2, R.drawable.c2,
+            R.drawable.c1, R.drawable.c2, R.drawable.c2,
+            R.drawable.c1, R.drawable.c2, R.drawable.c2,
     };
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,8 @@ public class Gallery extends Fragment {
         if (getArguments() != null) {
 
         }
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Gallery");
     }
 
     @Override
@@ -58,6 +60,8 @@ public class Gallery extends Fragment {
         });
         return mv;
     }
+
+
 
 
     public class ImageAdapterGridView extends BaseAdapter {
