@@ -1,7 +1,6 @@
 package com.rameshmklll.church;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -28,7 +27,6 @@ public class ImageFullView extends AppCompatActivity {
         carouselView = findViewById(R.id.carousel_view);
 
         carouselView.setPageCount(sampleImages.length);
-        cd [cd .length - 1]
         ImageListener imageListener = new ImageListener() {
             @Override
             public void setImageForPosition(int positio, ImageView imageView) {
