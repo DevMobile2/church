@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -96,7 +97,8 @@ public class BibleFragment extends Fragment {
         int id=item.getItemId();
         switch(id){
             case 2:
-
+                Spinner spVersions,spChapters;
+                spVersions=findv
                 final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.bible_search_layout);
                 dialog.setCanceledOnTouchOutside(true);
