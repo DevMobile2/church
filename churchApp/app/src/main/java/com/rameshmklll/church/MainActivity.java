@@ -61,7 +61,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
          setContentView(R.layout.activity_main);
          Log.d(TAG, "onCreate");
 
-//         ActionBar actionBar = getActionBar();
+         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+         actionBar.hide();
 //         actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED)); // set your desired color
 
          activity = this;
