@@ -145,9 +145,7 @@ public class DashBoard extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.sign_out_menu:
-
                 String b = PreferencesData.getProviderType(activity);
-
                 if ( b.equalsIgnoreCase("google.com")) {
                     mFirebaseAuth.signOut();
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient);

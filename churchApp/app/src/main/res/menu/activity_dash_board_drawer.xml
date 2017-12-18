@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:textColor="@color/colorBlack">
         <item
-
         android:id="@+id/bible"
         android:icon="@drawable/ic_menu_camera"
         android:title="Bible" />

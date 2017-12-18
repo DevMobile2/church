@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rameshmklll.church.MainActivity">
-
-
+    tools:context="com.rameshmklll.church.MainActivity"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:background="@drawable/christ_the_redeemer">
 
     <Button
         android:layout_centerInParent="true"
         android:id="@+id/btGoogle"
         android:gravity="center"
-        android:text="Sign in with Google"
+        android:text="@string/sign_in_google"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:theme="@style/MyButton"
+        android:drawableStart="@drawable/googleg_standard_color_18" />
 
     <Button
         android:id="@+id/btFb"
         android:layout_below="@+id/btGoogle"
-        android:text="Sign in with Faceboook"
+        android:text="@string/sign_in_fb"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:theme="@style/MyButtonFb"
+        android:drawableStart="@drawable/com_facebook_button_icon_blue"/>
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
@@ -33,10 +37,13 @@
         android:visibility="gone"/>
 
     <TextView
-    android:id="@+id/tvSkip"
-    android:layout_alignParentBottom="true"
-    android:gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Skip SignIn"/>
+        android:id="@+id/tvSkip"
+        android:layout_alignParentBottom="true"
+        android:gravity="end"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/skip_sign_in"
+        android:textColor="@color/white"/>
 </RelativeLayout>
