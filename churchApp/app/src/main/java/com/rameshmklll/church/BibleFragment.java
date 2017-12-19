@@ -2,9 +2,11 @@ package com.rameshmklll.church;
 
 import android.app.Dialog;
 import android.content.res.AssetManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,7 +59,7 @@ public class BibleFragment extends Fragment {
     LinearLayoutManager layoutManager;
     View view;
     private static ArrayList<TeluguBiblePojo> data;
-    private static RecyclerView.Adapter adapter;
+    private static TeluguBibleAdapter adapter;
     public BibleFragment() {
         // Required empty public constructor
     }
@@ -88,7 +90,7 @@ public class BibleFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         setHasOptionsMenu(true);
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Bible");
 
       //  recyclerView.setHasFixedSize(true);
 
@@ -117,9 +119,31 @@ public class BibleFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         data = new ArrayList<TeluguBiblePojo>();
         adapter = new TeluguBibleAdapter(data);
-        readExcelFileFromAssets();
+        recyclerView.setAdapter(adapter);
+
+       new ReadExcel().execute();
+
 
     }
+
+
+   class ReadExcel extends AsyncTask<String,Void,Void>{
+
+
+       @Override
+       protected Void doInBackground(String... strings) {
+
+           readExcelFileFromAssets();
+           return null;
+       }
+
+       @Override
+       protected void onPostExecute(Void aVoid) {
+           super.onPostExecute(aVoid);
+           adapter=new TeluguBibleAdapter(data);
+           recyclerView.setAdapter(adapter);
+       }
+   }
 
 
     @Override
@@ -150,6 +174,40 @@ public class BibleFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void readExcelFileFromAssets() {
 
         try {
@@ -158,7 +216,7 @@ public class BibleFragment extends Fragment {
     * File file = new File( filename); FileInputStream myInput = new
     * FileInputStream(file);
     */
-
+         data=new ArrayList<>();
             InputStream myInput;
             assetManager=getActivity().getAssets();
 
@@ -203,8 +261,8 @@ public class BibleFragment extends Fragment {
 //                    // myCell.toString(), Toast.LENGTH_SHORT).show();
 //                }
             }
-          adapter.notifyDataSetChanged();
-            recyclerView.setAdapter(adapter);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

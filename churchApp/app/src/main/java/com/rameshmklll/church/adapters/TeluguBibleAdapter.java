@@ -20,6 +20,11 @@ public class TeluguBibleAdapter extends RecyclerView.Adapter<TeluguBibleAdapter.
 
     private ArrayList<TeluguBiblePojo> dataSet;
 
+    public void clearDataSet() {
+        dataSet=new ArrayList<>();
+        notifyDataSetChanged();
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewName;
@@ -55,7 +60,7 @@ public class TeluguBibleAdapter extends RecyclerView.Adapter<TeluguBibleAdapter.
 
         TextView textViewName = holder.textViewName;
         TextView textViewVersion = holder.textViewVersion;
-        textViewName.setText(dataSet.get(listPosition).getName());
+        textViewName.setText(dataSet.get(listPosition).getVersion()+" . "+dataSet.get(listPosition).getName());
         textViewVersion.setText(dataSet.get(listPosition).getVersion());
 
     }
