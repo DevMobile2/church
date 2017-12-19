@@ -61,7 +61,6 @@ public class TeluguBibleAdapter extends RecyclerView.Adapter<TeluguBibleAdapter.
         TextView textViewName = holder.textViewName;
         TextView textViewVersion = holder.textViewVersion;
         textViewName.setText(dataSet.get(listPosition).getVersion()+" . "+dataSet.get(listPosition).getName());
-        textViewVersion.setText(dataSet.get(listPosition).getVersion());
 
     }
 

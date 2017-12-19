@@ -1,13 +1,20 @@
 package com.rameshmklll.church;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Point;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -48,7 +56,7 @@ public class BibleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    ProgressDialog progress;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -60,6 +68,7 @@ public class BibleFragment extends Fragment {
     View view;
     private static ArrayList<TeluguBiblePojo> data;
     private static TeluguBibleAdapter adapter;
+
     public BibleFragment() {
         // Required empty public constructor
     }
@@ -91,6 +100,7 @@ public class BibleFragment extends Fragment {
         }
         setHasOptionsMenu(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Bible");
+          progress=new ProgressDialog(getActivity());
 
       //  recyclerView.setHasFixedSize(true);
 
@@ -117,6 +127,7 @@ public class BibleFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),layoutManager.getOrientation()));
         data = new ArrayList<TeluguBiblePojo>();
         adapter = new TeluguBibleAdapter(data);
         recyclerView.setAdapter(adapter);
@@ -129,6 +140,13 @@ public class BibleFragment extends Fragment {
 
    class ReadExcel extends AsyncTask<String,Void,Void>{
 
+       @Override
+       protected void onPreExecute() {
+           super.onPreExecute();
+           progress.setMessage("Loading");
+           progress.show();
+
+       }
 
        @Override
        protected Void doInBackground(String... strings) {
@@ -140,6 +158,7 @@ public class BibleFragment extends Fragment {
        @Override
        protected void onPostExecute(Void aVoid) {
            super.onPostExecute(aVoid);
+           progress.dismiss();
            adapter=new TeluguBibleAdapter(data);
            recyclerView.setAdapter(adapter);
        }
@@ -151,22 +170,8 @@ public class BibleFragment extends Fragment {
         int id=item.getItemId();
         switch(id){
             case 2:
-                final Spinner spVersions,spChapters;
                 Button btSearch;
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.setContentView(R.layout.bible_search_layout);
-                spVersions=(Spinner) dialog.findViewById(R.id.spVersion);
-                spChapters=(Spinner) dialog.findViewById(R.id.spChapter);
-                btSearch=(Button) dialog.findViewById(R.id.btnReadExcel1);
-                btSearch.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                       chapter=spChapters.getSelectedItem().toString();
-                        version=spVersions.getSelectedItem().toString();
-                        readExcelFileFromAssets();
-                    }
-                });
-                dialog.setCanceledOnTouchOutside(true);
+                final Dialog dialog = new CustomDialogue(getActivity());
                 dialog.show();
                 break;
 
@@ -245,7 +250,7 @@ public class BibleFragment extends Fragment {
                 if( String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name)  &&  String.valueOf(cell_chapter.getNumericCellValue()).equalsIgnoreCase(chapter) ){
                     Cell cell_content=myRow.getCell(2);
                     String content=String.valueOf(cell_content.getStringCellValue());
-                    String id= String.valueOf(cell_version.getNumericCellValue());
+                    int id= (int) cell_version.getNumericCellValue();
                     Log.i("chapters", String.valueOf(cell_chapter.getNumericCellValue()));
                     TeluguBiblePojo teluguBiblePojo=new TeluguBiblePojo(content,id);
                     data.add(teluguBiblePojo);
@@ -273,5 +278,51 @@ public class BibleFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.add(0,2,1,"Search").setIcon(R.drawable.ic_search).setShowAsAction(1);
+    }
+
+    private void setHeightAndWidth() {
+        WindowManager manager = (WindowManager)getActivity().getSystemService(Activity.WINDOW_SERVICE);
+        int width, height;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO) {
+            width = manager.getDefaultDisplay().getWidth();
+            height = manager.getDefaultDisplay().getHeight();
+        } else {
+            Point point = new Point();
+            manager.getDefaultDisplay().getSize(point);
+            width = point.x;
+            height = point.y;
+        }
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(getActivity().getWindow().getAttributes());
+        lp.width = width;
+        lp.height = height;
+        getActivity().getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+    class CustomDialogue extends Dialog{
+
+     Spinner spVersions,spChapters;
+        Button btSearch;
+        public CustomDialogue(@NonNull Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.bible_search_layout);
+           // setHeightAndWidth();
+            spVersions=(Spinner) findViewById(R.id.spVersion);
+            spChapters=(Spinner) findViewById(R.id.spChapter);
+            btSearch=(Button) findViewById(R.id.btnReadExcel1);
+            btSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    chapter=spChapters.getSelectedItem().toString();
+                    version=spVersions.getSelectedItem().toString();
+                    readExcelFileFromAssets();
+                }
+            });
+        }
     }
 }

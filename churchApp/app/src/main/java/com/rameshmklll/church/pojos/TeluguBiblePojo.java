@@ -7,11 +7,11 @@ package com.rameshmklll.church.pojos;
 public class TeluguBiblePojo {
 
     String name;
-    String version;
+    int version;
     int id_;
     int image;
 
-    public TeluguBiblePojo(String name, String version) {
+    public TeluguBiblePojo(String name, int version) {
         this.name = name;
         this.version = version;
     }
@@ -20,7 +20,7 @@ public class TeluguBiblePojo {
         return name;
     }
 
-    public String getVersion() {
+    public int getVersion() {
         return version;
     }
 

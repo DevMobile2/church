@@ -20,12 +20,12 @@ public class Gallery extends Fragment {
     GridView androidGridView;
     View mv;
     Integer[] imageIDs = {
-            R.drawable.c1, R.drawable.c2, R.drawable.c1,
-            R.drawable.c1, R.drawable.c2, R.drawable.c1,
-            R.drawable.c1, R.drawable.c2, R.drawable.c2,
-            R.drawable.c1, R.drawable.c2, R.drawable.c2,
-            R.drawable.c1, R.drawable.c2, R.drawable.c2,
-            R.drawable.c1, R.drawable.c2, R.drawable.c2,
+            R.drawable.c1, R.drawable.c1, R.drawable.c1,
+            R.drawable.c1, R.drawable.c1, R.drawable.c1,
+            R.drawable.c1, R.drawable.c1, R.drawable.c1,
+            R.drawable.c1, R.drawable.c1, R.drawable.c1,
+            R.drawable.c1, R.drawable.c1, R.drawable.c1,
+            R.drawable.c1, R.drawable.c1, R.drawable.c1,
     };
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class Gallery extends Fragment {
 
             if (convertView == null) {
                 mImageView = new ImageView(mContext);
-                mImageView.setLayoutParams(new GridView.LayoutParams(130, 130));
+                mImageView.setLayoutParams(new GridView.LayoutParams(400, 400));
                 mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 mImageView.setPadding(16, 16, 16, 16);
             } else {
