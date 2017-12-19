@@ -7,4 +7,6 @@
     <color name="colorBlack">#212121</color>
     <color name="colorBlue">#3b5998</color>
     <color name="colorGoogleBtn">#d34836</color>
+    <color name="textcolor_light_grey">#757575</color>
+
 </resources>

@@ -16,6 +16,14 @@
     <string name="sign_in_google">Sign in with Google</string>
     <string name="sign_in_fb">Sign in with Faceboook</string>
     <string name="skip_sign_in">Skip SignIn</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="our_address">Our Address</string>
+    <string name="church_name">CSI Christ Church</string>
+    <string name="road_name">ASR Stadium Road</string>
+    <string name="dist_name">Eluru, W.G Dist</string>
+    <string name="state_name">Andhra Pradesh, 534005</string>
+
+
 
     <string-array name="chapters">
         <item>CHAPTER 1</item>
