@@ -35,4 +35,19 @@
         <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
     <color name="white">#ffffff</color>
+
+    <style name="textview_header" parent="@style/textview_name">
+        <!--<item name="android:textSize">@dimen/text_header</item>-->
+    </style>
+
+    <style name="textview_name" parent="@style/textview_parent">
+        <!--<item name="android:textSize">@dimen/text_name</item>-->
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textview_parent">
+        <item name="android:textColor">@color/textcolor_light_grey</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
 </resources>

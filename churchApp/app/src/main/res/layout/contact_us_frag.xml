@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:text="@string/our_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textview_header"/>
+
+    <TextView
+        android:text="@string/church_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="@string/road_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="@string/dist_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="@string/state_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+
+<!--our address-->
+<!--CSI Christ Church-->
+<!--ASR Stadium Road-->
+<!--Eluru, W.G Dist.-->
+<!--Andhra Pradesh, 534005.-->

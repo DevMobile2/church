@@ -43,7 +43,8 @@
             android:label="@string/title_activity_dash_board"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".XlReaderActivity"/>
-        <activity android:name=".ContactUs"/>
+        <activity android:name=".ContactUs"
+            android:label="@string/contact_us"/>
         <activity android:name=".HomeScreen"/>
         <activity android:name=".ImageFullView"/>
     </application>

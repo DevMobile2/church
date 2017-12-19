@@ -181,8 +181,12 @@ public class DashBoard extends AppCompatActivity
 
         } else if (id == R.id.contact) {
 
-            Intent intent=new Intent(this,XlReaderActivity.class);
-            startActivity(intent);
+
+          fragment  = new ContactUsFragment();
+           fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "ContactUs")
+           .addToBackStack("ContactUs").commit();
+//            Intent intent=new Intent(this, ContactUs.class);
+//            startActivity(intent);
         } else if (id == R.id.gallery) {
             fragment=new Gallery();
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "Gallery")
