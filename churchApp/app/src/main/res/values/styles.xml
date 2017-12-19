@@ -37,11 +37,11 @@
     <color name="white">#ffffff</color>
 
     <style name="textview_header" parent="@style/textview_name">
-        <!--<item name="android:textSize">@dimen/text_header</item>-->
+        <item name="android:textSize">@dimen/text_header</item>
     </style>
 
     <style name="textview_name" parent="@style/textview_parent">
-        <!--<item name="android:textSize">@dimen/text_name</item>-->
+        <item name="android:textSize">@dimen/text_name</item>
         <item name="android:textStyle">bold</item>
     </style>
 

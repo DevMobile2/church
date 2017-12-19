@@ -4,13 +4,17 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single"
-        android:textColor="@color/colorBlack"
-        >
+        android:textColor="@color/colorBlack">
         <item
             android:iconTint="#2196F3"
-        android:id="@+id/bible"
-        android:icon="@drawable/ic_menu_camera"
-        android:title="Bible" />
+            android:id="@+id/first_page"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="DashBoard" />
+        <item
+            android:iconTint="#2196F3"
+            android:id="@+id/bible"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Bible" />
         <item
             android:iconTint="#2196F3"
             android:id="@+id/hymner"
@@ -24,8 +28,8 @@
         <item
             android:iconTint="#2196F3"
             android:id="@+id/worship_timings"
-        android:icon="@drawable/ic_menu_camera"
-        android:title="Bible" />
+             android:icon="@drawable/ic_menu_camera"
+            android:title="Worship Timings" />
 
         <item
             android:iconTint="#2196F3"
