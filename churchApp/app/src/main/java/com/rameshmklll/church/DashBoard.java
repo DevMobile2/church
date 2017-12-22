@@ -192,6 +192,11 @@ public class DashBoard extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "Gallery")
                     .addToBackStack("Gallery").commit();
         }
+        else if (id == R.id.almanac) {
+            fragment=new AlmanacFragment();
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "Almanac")
+                    .addToBackStack("Gallery").commit();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
