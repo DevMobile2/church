@@ -22,7 +22,7 @@ public class TeluguBibleAdapter extends RecyclerView.Adapter<TeluguBibleAdapter.
 
     public void clearDataSet() {
         dataSet=new ArrayList<>();
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
