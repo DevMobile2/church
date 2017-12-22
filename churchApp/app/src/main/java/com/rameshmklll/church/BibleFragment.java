@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -47,7 +48,7 @@ import java.util.Iterator;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
-
+ * <p>
  * to handle interaction events.
  * Use the {@link BibleFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -57,19 +58,19 @@ public class BibleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static ArrayList<TeluguBiblePojo> data;
+    private static TeluguBibleAdapter adapter;
     ProgressDialog progress;
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     AssetManager assetManager;
-    private HSSFRow myRow;
-    String chapter="2.0",version="1",book_name="ఆదికాండము";
+    String chapter = "3.0", version = "1", book_name = "ఆదికాండము";
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     View view;
-    private static ArrayList<TeluguBiblePojo> data;
-    private static TeluguBibleAdapter adapter;
-    boolean match=false;
+    boolean match = false;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+    private HSSFRow myRow;
 
     public BibleFragment() {
         // Required empty public constructor
@@ -101,11 +102,10 @@ public class BibleFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         setHasOptionsMenu(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Bible");
-          progress=new ProgressDialog(getActivity());
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Bible");
+        progress = new ProgressDialog(getActivity());
 
-      //  recyclerView.setHasFixedSize(true);
-
+        //  recyclerView.setHasFixedSize(true);
 
 
     }
@@ -114,54 +114,29 @@ public class BibleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view=inflater.inflate(R.layout.fragment_bible, container, false);
-        return  view;
+        view = inflater.inflate(R.layout.fragment_bible, container, false);
+        return view;
     }
-
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),layoutManager.getOrientation()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), layoutManager.getOrientation()));
         data = new ArrayList<TeluguBiblePojo>();
         adapter = new TeluguBibleAdapter(data);
         recyclerView.setAdapter(adapter);
-       new ReadExcel().execute();
+        new ReadExcel().execute();
     }
-
-
-   class ReadExcel extends AsyncTask<String,Void,Void>{
-       @Override
-       protected void onPreExecute() {
-           super.onPreExecute();
-           progress.setMessage("Loading...");
-           progress.show();
-       }
-
-       @Override
-       protected Void doInBackground(String... strings) {
-           readExcelFileFromAssets();
-           return null;
-       }
-
-       @Override
-       protected void onPostExecute(Void aVoid) {
-           super.onPostExecute(aVoid);
-           progress.dismiss();
-           adapter=new TeluguBibleAdapter(data);
-           recyclerView.setAdapter(adapter);
-       }
-   }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id=item.getItemId();
-        switch(id){
+        int id = item.getItemId();
+        switch (id) {
             case 2:
                 Button btSearch;
                 final Dialog dialog = new CustomDialogue(getActivity());
@@ -171,40 +146,6 @@ public class BibleFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void readExcelFileFromAssets() {
 
         try {
@@ -213,9 +154,10 @@ public class BibleFragment extends Fragment {
     * File file = new File( filename); FileInputStream myInput = new
     * FileInputStream(file);
     */
-         data=new ArrayList<>();
+            data = new ArrayList<>();
+            adapter.clearDataSet(); 
             InputStream myInput;
-            assetManager=getActivity().getAssets();
+            assetManager = getActivity().getAssets();
 
             //  Don't forget to Change to your assets folder excel sheet
             myInput = assetManager.open("telugu_bible.xls");
@@ -234,28 +176,23 @@ public class BibleFragment extends Fragment {
             rowIter.next();
 
 
-
             while (rowIter.hasNext()) {
-               // HSSFRow  HSSFRowmyRow = (HSSFRow) rowIter.next();
+                // HSSFRow  HSSFRowmyRow = (HSSFRow) rowIter.next();
                 myRow = (HSSFRow) rowIter.next();
-                Cell cell_book_name=myRow.getCell(0);
-                Cell cell_chapter=myRow.getCell(1);
-                Cell cell_version=myRow.getCell(3);
-
-                if( String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name)  &&  String.valueOf(cell_chapter.getNumericCellValue()).equalsIgnoreCase(chapter) ){
-                    Log.i("teluguu",String.valueOf(cell_book_name.getStringCellValue()));
-                    match=true;
-                    Cell cell_content=myRow.getCell(2);
-                    String content=String.valueOf(cell_content.getStringCellValue());
-                    int id= (int) cell_version.getNumericCellValue();
+                Cell cell_book_name = myRow.getCell(0);
+                Cell cell_chapter = myRow.getCell(1);
+                Cell cell_version = myRow.getCell(3);
+                String chapter_Number= String.valueOf(Double.parseDouble(String.valueOf(cell_chapter.getNumericCellValue())));
+                Log.i("bookame", cell_book_name.getStringCellValue()+"and"+book_name+chapter+"and"+chapter_Number);
+                if (String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name) && String.valueOf(chapter_Number).equalsIgnoreCase(chapter)) {
+                    Log.i("teluguu", String.valueOf(cell_book_name.getStringCellValue()));
+                    match = true;
+                    Cell cell_content = myRow.getCell(2);
+                    String content = String.valueOf(cell_content.getStringCellValue());
+                    int id = (int) cell_version.getNumericCellValue();
                     Log.i("chapters", String.valueOf(cell_chapter.getNumericCellValue()));
-                    TeluguBiblePojo teluguBiblePojo=new TeluguBiblePojo(content,id);
+                    TeluguBiblePojo teluguBiblePojo = new TeluguBiblePojo(content, id);
                     data.add(teluguBiblePojo);
-                }
-                else{
-                    if(match){
-                        break;
-                    }
                 }
 
 
@@ -279,11 +216,11 @@ public class BibleFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.add(0,2,1,"Search").setIcon(R.drawable.ic_search).setShowAsAction(1);
+        menu.add(0, 2, 1, "Search").setIcon(R.drawable.ic_search).setShowAsAction(1);
     }
 
     private void setHeightAndWidth() {
-        WindowManager manager = (WindowManager)getActivity().getSystemService(Activity.WINDOW_SERVICE);
+        WindowManager manager = (WindowManager) getActivity().getSystemService(Activity.WINDOW_SERVICE);
         int width, height;
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO) {
             width = manager.getDefaultDisplay().getWidth();
@@ -301,10 +238,34 @@ public class BibleFragment extends Fragment {
         getActivity().getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-    class CustomDialogue extends Dialog{
+    class ReadExcel extends AsyncTask<String, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.setMessage("Loading...");
+            progress.show();
+        }
 
-     Spinner spVersions,spChapters,spBooks;
+        @Override
+        protected Void doInBackground(String... strings) {
+            readExcelFileFromAssets();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progress.dismiss();
+            adapter = new TeluguBibleAdapter(data);
+            recyclerView.setAdapter(adapter);
+        }
+    }
+
+    class CustomDialogue extends Dialog {
+
+        Spinner spVersions, spChapters, spBooks;
         Button btSearch;
+
         public CustomDialogue(@NonNull Context context) {
             super(context);
         }
@@ -313,21 +274,55 @@ public class BibleFragment extends Fragment {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.bible_search_layout);
-           // setHeightAndWidth();
-            spVersions=(Spinner) findViewById(R.id.spVersion);
-            spChapters=(Spinner) findViewById(R.id.spChapter);
-            spBooks=(Spinner) findViewById(R.id.spBookName);
-            btSearch=(Button) findViewById(R.id.btnReadExcel1);
+            // setHeightAndWidth();
+            spVersions = (Spinner) findViewById(R.id.spVersion);
+            spChapters = (Spinner) findViewById(R.id.spChapter);
+            spBooks = (Spinner) findViewById(R.id.spBookName);
+            btSearch = (Button) findViewById(R.id.btnReadExcel1);
+            spBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    book_name=adapterView.getSelectedItem().toString();
+                    Toast.makeText(getActivity(), book_name, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            spChapters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    chapter=adapterView.getSelectedItem().toString()+".0";
+                    Toast.makeText(getActivity(), chapter, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            spVersions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    version=adapterView.getSelectedItem().toString();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
             btSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    book_name=spBooks.getSelectedItem().toString();
-                    version=spVersions.getSelectedItem().toString();
-                    Toast.makeText(getActivity(), book_name+version, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), book_name + chapter, Toast.LENGTH_SHORT).show();
                     dismiss();
                     readExcelFileFromAssets();
                 }
             });
         }
+
     }
 }
