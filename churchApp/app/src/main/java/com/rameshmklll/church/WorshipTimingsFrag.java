@@ -24,8 +24,4 @@ public class WorshipTimingsFrag extends Fragment {
         return inflater.inflate(R.layout.activity_worship_timings, null);
     }
 
-
-
-
-
 }
