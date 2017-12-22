@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.rameshmklll.church.adapters.TeluguBibleAdapter;
 import com.rameshmklll.church.pojos.TeluguBiblePojo;
@@ -62,12 +63,13 @@ public class BibleFragment extends Fragment {
     private String mParam2;
     AssetManager assetManager;
     private HSSFRow myRow;
-    String chapter="2.0",version="1",book_name="Genesis";
+    String chapter="2.0",version="1",book_name="ఆదికాండము";
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     View view;
     private static ArrayList<TeluguBiblePojo> data;
     private static TeluguBibleAdapter adapter;
+    boolean match=false;
 
     public BibleFragment() {
         // Required empty public constructor
@@ -216,7 +218,7 @@ public class BibleFragment extends Fragment {
             assetManager=getActivity().getAssets();
 
             //  Don't forget to Change to your assets folder excel sheet
-            myInput = assetManager.open("bible.xls");
+            myInput = assetManager.open("telugu_bible.xls");
 
             // Create a POIFSFileSystem object
             POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
@@ -231,19 +233,29 @@ public class BibleFragment extends Fragment {
             Iterator<Row> rowIter = mySheet.rowIterator();
             rowIter.next();
 
+
+
             while (rowIter.hasNext()) {
                // HSSFRow  HSSFRowmyRow = (HSSFRow) rowIter.next();
                 myRow = (HSSFRow) rowIter.next();
                 Cell cell_book_name=myRow.getCell(0);
                 Cell cell_chapter=myRow.getCell(1);
                 Cell cell_version=myRow.getCell(3);
+
                 if( String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name)  &&  String.valueOf(cell_chapter.getNumericCellValue()).equalsIgnoreCase(chapter) ){
+                    Log.i("teluguu",String.valueOf(cell_book_name.getStringCellValue()));
+                    match=true;
                     Cell cell_content=myRow.getCell(2);
                     String content=String.valueOf(cell_content.getStringCellValue());
                     int id= (int) cell_version.getNumericCellValue();
                     Log.i("chapters", String.valueOf(cell_chapter.getNumericCellValue()));
                     TeluguBiblePojo teluguBiblePojo=new TeluguBiblePojo(content,id);
                     data.add(teluguBiblePojo);
+                }
+                else{
+                    if(match){
+                        break;
+                    }
                 }
 
 
@@ -291,7 +303,7 @@ public class BibleFragment extends Fragment {
 
     class CustomDialogue extends Dialog{
 
-     Spinner spVersions,spChapters;
+     Spinner spVersions,spChapters,spBooks;
         Button btSearch;
         public CustomDialogue(@NonNull Context context) {
             super(context);
@@ -304,12 +316,15 @@ public class BibleFragment extends Fragment {
            // setHeightAndWidth();
             spVersions=(Spinner) findViewById(R.id.spVersion);
             spChapters=(Spinner) findViewById(R.id.spChapter);
+            spBooks=(Spinner) findViewById(R.id.spBookName);
             btSearch=(Button) findViewById(R.id.btnReadExcel1);
             btSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    chapter=spChapters.getSelectedItem().toString();
+                    book_name=spBooks.getSelectedItem().toString();
                     version=spVersions.getSelectedItem().toString();
+                    Toast.makeText(getActivity(), book_name+version, Toast.LENGTH_SHORT).show();
+                    dismiss();
                     readExcelFileFromAssets();
                 }
             });

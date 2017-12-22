@@ -43,35 +43,104 @@
     Every Friday (H.C)  -  6.00 AM – 7.00 AM </string>
 
 
-    <string-array name="chapters">
-        <item>CHAPTER 1</item>
-        <item>CHAPTER 2</item>
-        <item>CHAPTER 3</item>
-        <item>CHAPTER 4</item>
-        <item>CHAPTER 5</item>
-        <item>CHAPTER 6</item>
-        <item>CHAPTER 7</item>
-        <item>CHAPTER 8</item>
-        <item>CHAPTER 9</item>
-        <item>CHAPTER 10</item>
+    <string-array name="Book">
+        <item>ఆది కాండము</item>
+        <item>నిర్గామకాండము</item>
+        <item>లేవియ కాండము</item>
+        <item>సంఖ్యా కాండము</item>
+        <item>ద్వితీయోపదేశ కాండము</item>
+        <item>యెహూషువ</item>
+        <item>న్యాయాధిపతులు</item>
+        <item>రూతు</item>
+        <item>1 సమూయేలు</item>
+        <item>2 సమూయేలు</item>
+        <item>1 రాజులు</item>
+        <item>2 రాజులు</item>
+        <item>1 దినవృత్తాంతాలు</item>
+        <item>2 దినవృత్తాంతాలు</item>
+        <item>ఎజ్రా</item>
+        <item>నెహెమ్యా</item>
+        <item>ఎస్తేరు</item>
+        <item>యోబు గ్రంథము</item>
+        <item>కీర్తనల గ్రంథము</item>
+        <item>సామెతలు</item>
+        <item>ప్రసంగిు</item>
+        <item>పరమగీతము</item>
+        <item>యోషయా</item>
+        <item>యిర్మియా</item>
+        <item>విలాపవాక్యములు</item>
+        <item>యెజెజ్కేలు</item>
+        <item>దానియేలు</item>
+        <item>హోషేయ</item>
+        <item>యోవేలు</item>
+        <item>ఆమోసు</item>
+        <item>ఓబద్యా</item>
+        <item>యోనా</item>
+        <item>మీకా</item>
+        <item>నహూము</item>
+        <item>హబక్కూకు</item>
+        <item>జెఫన్యా</item>
+        <item>హగ్గయి</item>
+        <item>జెకర్యా</item>
+        <item>మలాకీ</item>
+        <item>మత్తయి సువార్త</item>
+        <item>మార్కు సువార్త</item>
+        <item>లూకా సువార్త</item>
+        <item>యోహాను సువార్త</item>
+        <item>అపోస్తలుల కార్యములు</item>
+        <item>రోమీయులకు పత్రిక</item>
+        <item>I కొరంథీయులకు పత్రిక</item>
+        <item>కొరంథీయులకు పత్రిక</item>
+        <item>గలతీయులకు పత్రిక</item>
+        <item>ఎఫసీయులకు పత్రిక</item>
+        <item>ఫిలిప్పీయులకు పత్రిక</item>
+        <item>కొలొస్సైయులకు పత్రిక</item>
+        <item>1 థెస్సలొనీకైయులకు పత్రిక</item>
+        <item>2 థెస్సలొనీకైయులకు పత్రిక</item>
+        <item>I తెమోతికి పత్రిక</item>
+        <item>II తెమోతికి పత్రిక</item>
+        <item>తీతుకు పత్రిక</item>
+        <item>ఫిలేమోనుకు పత్రిక</item>
+        <item>హెబ్రీయులకు పత్రిక</item>
+        <item>యాకోబు పత్రిక</item>
+        <item>I పేతురు పత్రిక,</item>
+        <item>II పేతురు పత్రిక</item>
+        <item>I యోహాను పత్రిక</item>
+        <item>II యోహాను పత్రిక</item>
+        <item>III యోహాను పత్రిక</item>
+        <item>యూదా పత్రిక</item>
+
+
+
+
+
+
     </string-array>
     <string-array name="VERSIONS">
-        <item>VERSIONS 1</item>
-        <item>VERSIONS 2</item>
-        <item>VERSIONS 3</item>
-        <item>VERSIONS 4</item>
-        <item>VERSIONS 5</item>
-        <item>VERSIONS 6</item>
-        <item>VERSIONS 7</item>
-        <item>VERSIONS 8</item>
-        <item>VERSIONS 9</item>
-        <item>VERSIONS 10</item>
-    </string-array>
-    <string-array name="Book">
-        <item>Genesis</item>
-        <item>Exodus</item>
-     <item>Leviticus</item>
-        <item>Numbers</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
     </string-array>
 
+
+
+    <string-array name="chapters">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
 </resources>
