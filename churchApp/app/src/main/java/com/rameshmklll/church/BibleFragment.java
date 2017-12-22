@@ -115,7 +115,6 @@ public class BibleFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_bible, container, false);
-
         return  view;
     }
 
@@ -124,7 +123,6 @@ public class BibleFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -133,26 +131,20 @@ public class BibleFragment extends Fragment {
         data = new ArrayList<TeluguBiblePojo>();
         adapter = new TeluguBibleAdapter(data);
         recyclerView.setAdapter(adapter);
-
        new ReadExcel().execute();
-
-
     }
 
 
    class ReadExcel extends AsyncTask<String,Void,Void>{
-
        @Override
        protected void onPreExecute() {
            super.onPreExecute();
-           progress.setMessage("Loading");
+           progress.setMessage("Loading...");
            progress.show();
-
        }
 
        @Override
        protected Void doInBackground(String... strings) {
-
            readExcelFileFromAssets();
            return null;
        }
@@ -166,7 +158,6 @@ public class BibleFragment extends Fragment {
        }
    }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
@@ -176,7 +167,6 @@ public class BibleFragment extends Fragment {
                 final Dialog dialog = new CustomDialogue(getActivity());
                 dialog.show();
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -63,7 +64,7 @@ public class DashBoard extends AppCompatActivity
          tv_user =  headerView.findViewById(R.id.tv_user);
          tv_email  = headerView.findViewById(R.id.tv_email);
         iv_profile = headerView.findViewById(R.id.iv_profile);
-       boolean is_skip = getIntent().getBooleanExtra("is_skip", false);
+        boolean is_skip = getIntent().getBooleanExtra("is_skip", false);
 
         // Set default username is anonymous.
         mUsername = ANONYMOUS;
@@ -96,6 +97,10 @@ public class DashBoard extends AppCompatActivity
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
+
+
+//        onNavigationItemSelected(null);
+        doClick(R.id.first_page);
     }
 
     private void setProfilePic(String mPhotoUrl) {
@@ -169,28 +174,36 @@ public class DashBoard extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        doClick(id);
+        return true;
+    }
+
+    private void doClick(int id) {
         if (id == R.id.worship_timings) {
             // Handle the camera action
             fragment=new WorshipTimingsFrag();
-            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "pendingReports")
-                    .addToBackStack("Interviewer").commit();
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "worship_timings")
+                    .addToBackStack("worship_timings").commit();
         } else if (id == R.id.bible) {
             fragment=new BibleFragment();
-            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "pendingReports")
-                    .addToBackStack("Interviewer").commit();
-
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "bible")
+                    .addToBackStack("bible").commit();
         } else if (id == R.id.contact) {
-
-
-          fragment  = new ContactUsFragment();
-           fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "ContactUs")
-           .addToBackStack("ContactUs").commit();
-//            Intent intent=new Intent(this, ContactUs.class);
-//            startActivity(intent);
+            fragment  = new ContactUsFragment();
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "ContactUs")
+                    .addToBackStack("ContactUs").commit();
         } else if (id == R.id.gallery) {
             fragment=new Gallery();
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "Gallery")
                     .addToBackStack("Gallery").commit();
+        }else if (id == R.id.first_page){
+            fragment = new FirstPage();
+            Bundle bundle = new Bundle();
+            bundle.putString("userName", mUsername);
+            fragment.setArguments( bundle);
+
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "FirstPage")
+                    .addToBackStack("FirstPage").commit();
         }
         else if (id == R.id.almanac) {
             fragment=new AlmanacFragment();
@@ -200,7 +213,6 @@ public class DashBoard extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
 

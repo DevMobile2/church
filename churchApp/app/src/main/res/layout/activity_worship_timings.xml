@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="10dp">
+    android:padding="@dimen/activity_horizontal_margin">
 
 
     <LinearLayout
@@ -16,7 +16,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Every Sunday"/>
+            android:text="Every Sunday"
+            style="@style/textview_header"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -41,7 +42,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Fourth Sunday"/>
+            android:text="Fourth Sunday"
+            style="@style/textview_header"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -63,7 +65,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="English service"/>
+            android:text="English service"
+            style="@style/textview_header"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -89,7 +92,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Sunday School \n for children"/>
+            android:text="Sunday School \n for children"
+            style="@style/textview_header"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -113,7 +117,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Every Sunday"/>
+            android:text="Every Sunday"
+            style="@style/textview_header"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -137,7 +142,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Every Sunday"/>
+            android:text="Every Sunday"
+            style="@style/textview_header"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -161,7 +167,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Every Sunday"/>
+            android:text="Every Sunday"
+            style="@style/textview_header"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -172,10 +179,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Except 4th sunday"/>
-
     </LinearLayout>
-
-
 
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -186,7 +190,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Every Sunday"/>
+            android:text="Every Sunday"
+            style="@style/textview_header"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"

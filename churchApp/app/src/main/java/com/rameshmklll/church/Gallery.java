@@ -62,8 +62,6 @@ public class Gallery extends Fragment {
     }
 
 
-
-
     public class ImageAdapterGridView extends BaseAdapter {
         private Context mContext;
 
