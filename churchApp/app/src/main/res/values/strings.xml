@@ -17,16 +17,30 @@
     <string name="sign_in_fb">Sign in with Faceboook</string>
     <string name="skip_sign_in">Skip SignIn</string>
     <string name="contact_us">Contact Us</string>
-    <string name="our_address">Our Address</string>
+    <string name="our_address">Our Address:</string>
     <string name="church_name">CSI Christ Church </string>
     <string name="road_name">ASR Stadium Road, </string>
-    <string name="dist_name">Eluru, W.G Dist, </string>
-    <string name="state_name">Andhra Pradesh, 534005.</string>
+    <string name="dist_name">Eluru, W.G Dist., </string>
+    <string name="state_name">Andhra Pradesh 534005</string>
     <string name="mobile">Mobile No: </string>
-    <string name="num">08812-250777</string>
+    <string name="num">08812 250777</string>
     <string name="office">Office:</string>
-    <string name="wtsapp">Whatsapp:</string>
-    <string name="email">Email:</string>
+    <string name="wtsapp">Whats App:</string>
+    <string name="email_incharge">Email to Presbyter-In-Charge</string>
+    <string name="email_secretary">Email to Secretary</string>
+    <string name="email_admin">Email to Admin</string>
+
+    <string name="dashboard">DashBoard</string>
+    <string name="worship_timings">Worship Timings</string>
+    <string name="bible">Bible</string>
+    <string name="gallery">Gallery</string>
+    <string name="timings">Every Sunday (H.C) – 8.30 AM – 11.00 AM \n(Except Fourth Sunday) \n\n\n
+    Every Fourth Sunday – 8.30 AM – 10.30 AM \n\n\n
+    English Service – 6.30 PM – 8.00 PM \n\n\n
+    Sunday school – 8.30 AM – 10.00 AM \n\n\n
+    Youth Service – 4.00 PM – 6.00 PM \n\n\n
+    Women Fellowship – 6.30 PM – 8.00 PM \n\n\n
+    Every Friday (H.C)  -  6.00 AM – 7.00 AM </string>
 
 
     <string-array name="Book">

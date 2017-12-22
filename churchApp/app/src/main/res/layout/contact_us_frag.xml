@@ -74,6 +74,7 @@
             style="@style/textview_header"
             android:layout_weight=".3"/>
         <TextView
+            android:visibility="gone"
             android:text="@string/num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,16 +87,16 @@
         android:orientation="horizontal"
         android:weightSum="1">
         <TextView
-            android:text="@string/email"
+            android:text="@string/email_incharge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/textview_header"
-            android:layout_weight=".3"/>
+            android:layout_weight=".5"/>
         <TextView
             android:text="church@gmail.com"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".7"
+            android:layout_weight=".5"
             style="@style/TextAppearance.AppCompat.Subhead"/>
     </LinearLayout>
     <LinearLayout
@@ -104,17 +105,17 @@
         android:orientation="horizontal"
         android:weightSum="1">
         <TextView
-            android:text="@string/email"
+            android:text="@string/email_secretary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/textview_header"
-            android:layout_weight=".3"/>
+            android:layout_weight=".5"/>
         <TextView
             android:text="church1@gmail.com"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_weight=".7"/>
+            android:layout_weight=".5"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -122,16 +123,16 @@
         android:orientation="horizontal"
         android:weightSum="1">
         <TextView
-            android:text="@string/email"
+            android:text="@string/email_admin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/textview_header"
-            android:layout_weight=".3"/>
+            android:layout_weight=".5"/>
         <TextView
             android:text="church2@gmail.com"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".7"
+            android:layout_weight=".5"
             style="@style/TextAppearance.AppCompat.Subhead"/>
     </LinearLayout>
 

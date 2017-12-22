@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 public class WorshipTimingsFrag extends Fragment {
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +22,5 @@ public class WorshipTimingsFrag extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.activity_worship_timings, null);
     }
-
-
-
-
 
 }

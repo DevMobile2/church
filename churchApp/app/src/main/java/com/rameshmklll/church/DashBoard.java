@@ -2,6 +2,7 @@ package com.rameshmklll.church;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -43,12 +46,15 @@ public class DashBoard extends AppCompatActivity
     private DashBoard activity;
     private TextView tv_user, tv_email;
     private ImageView iv_profile;
+    ArrayList<Integer> titles = new ArrayList<>();
+    Toolbar toolbar;
+    private boolean doubleBackToExitPressedOnce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         activity= this;
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
@@ -134,6 +140,44 @@ public class DashBoard extends AppCompatActivity
                 super.onBackPressed();
             }
         }
+
+
+
+//        FragmentManager manager = getSupportFragmentManager();
+//        if (manager.getBackStackEntryCount() > 0) {
+//            manager.popBackStack();
+//
+//            int index = titles.size() - 1;
+//            if (index > -1)
+//                titles.remove(titles.get(index));
+//
+//            if (titles.size() == 0)
+//                toolbar.setTitle(R.string.dashboard);
+//            else
+//                toolbar.setTitle(titles.get(titles.size() - 1));
+//
+//        } else {
+//            if (doubleBackToExitPressedOnce) {
+////                this.stopService(new Intent(this, ChatService.class));
+////                ChatService.unsubscribeToEteki();
+//                Intent in = new Intent(this, MainActivity.class);
+//                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                in.putExtra("exit", true);
+//                startActivity(in);
+//            }
+//
+//            this.doubleBackToExitPressedOnce = true;
+//            Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+//
+//            new Handler().postDelayed(new Runnable() {
+//
+//                @Override
+//                public void run() {
+//                    doubleBackToExitPressedOnce = false;
+//                }
+//            }, 2000);
+//        }
+
     }
 
     @Override
@@ -179,24 +223,32 @@ public class DashBoard extends AppCompatActivity
     }
 
     private void doClick(int id) {
+        int title = R.string.dashboard;
+
         if (id == R.id.worship_timings) {
+             title = R.string.worship_timings;
+
             // Handle the camera action
             fragment=new WorshipTimingsFrag();
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "worship_timings")
                     .addToBackStack("worship_timings").commit();
         } else if (id == R.id.bible) {
+            title = R.string.bible;
             fragment=new BibleFragment();
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "bible")
                     .addToBackStack("bible").commit();
         } else if (id == R.id.contact) {
+            title = R.string.contact_us;
             fragment  = new ContactUsFragment();
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "ContactUs")
                     .addToBackStack("ContactUs").commit();
         } else if (id == R.id.gallery) {
+            title = R.string.gallery;
             fragment=new Gallery();
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "Gallery")
                     .addToBackStack("Gallery").commit();
         }else if (id == R.id.first_page){
+            title = R.string.dashboard;
             fragment = new FirstPage();
             Bundle bundle = new Bundle();
             bundle.putString("userName", mUsername);
@@ -210,7 +262,7 @@ public class DashBoard extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "Almanac")
                     .addToBackStack("Gallery").commit();
         }
-
+        titles.add(title);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
