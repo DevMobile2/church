@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.rameshmklll.church.MainActivity"
-    android:padding="@dimen/activity_horizontal_margin"
-    android:background="@drawable/christ_the_redeemer">
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:src="@drawable/signin_" />
 
     <Button
-        android:layout_centerInParent="true"
         android:id="@+id/btGoogle"
         android:gravity="center"
         android:text="@string/sign_in_google"
@@ -19,7 +23,6 @@
 
     <Button
         android:id="@+id/btFb"
-        android:layout_below="@+id/btGoogle"
         android:text="@string/sign_in_fb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +41,6 @@
 
     <TextView
         android:id="@+id/tvSkip"
-        android:layout_alignParentBottom="true"
         android:gravity="end"
         android:textAllCaps="true"
         android:textStyle="bold"
@@ -46,4 +48,4 @@
         android:layout_height="wrap_content"
         android:text="@string/skip_sign_in"
         android:textColor="@color/white"/>
-</RelativeLayout>
+</LinearLayout>

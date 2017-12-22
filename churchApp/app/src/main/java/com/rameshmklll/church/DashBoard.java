@@ -110,7 +110,6 @@ public class DashBoard extends AppCompatActivity
     }
 
     private void setProfilePic(String mPhotoUrl) {
-
         Picasso.with(activity)
                 .load(mPhotoUrl)
 //                .resize(60, 50)
@@ -125,7 +124,6 @@ public class DashBoard extends AppCompatActivity
                         //code
                     }
                 });
-
     }
 
     @Override
@@ -140,7 +138,6 @@ public class DashBoard extends AppCompatActivity
                 super.onBackPressed();
             }
         }
-
 
 
 //        FragmentManager manager = getSupportFragmentManager();
