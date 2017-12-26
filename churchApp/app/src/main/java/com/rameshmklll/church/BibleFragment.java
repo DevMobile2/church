@@ -155,7 +155,7 @@ public class BibleFragment extends Fragment {
     * FileInputStream(file);
     */
             data = new ArrayList<>();
-            adapter.clearDataSet(); 
+            adapter.clearDataSet();
             InputStream myInput;
             assetManager = getActivity().getAssets();
 
@@ -183,8 +183,8 @@ public class BibleFragment extends Fragment {
                 Cell cell_chapter = myRow.getCell(1);
                 Cell cell_version = myRow.getCell(3);
                 String chapter_Number= String.valueOf(Double.parseDouble(String.valueOf(cell_chapter.getNumericCellValue())));
-                Log.i("bookame", cell_book_name.getStringCellValue()+"and"+book_name+chapter+"and"+chapter_Number);
-                if (String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name) && String.valueOf(chapter_Number).equalsIgnoreCase(chapter)) {
+                Log.i("bookame", cell_book_name.getStringCellValue()+"and"+book_name+chapter+"and"+chapter);
+                if (String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name) /*&& chapter_Number.equalsIgnoreCase(chapter)*/) {
                     Log.i("teluguu", String.valueOf(cell_book_name.getStringCellValue()));
                     match = true;
                     Cell cell_content = myRow.getCell(2);
@@ -193,10 +193,13 @@ public class BibleFragment extends Fragment {
                     Log.i("chapters", String.valueOf(cell_chapter.getNumericCellValue()));
                     TeluguBiblePojo teluguBiblePojo = new TeluguBiblePojo(content, id);
                     data.add(teluguBiblePojo);
+
                 }
 
 
-                Iterator<Cell> cellIter = myRow.cellIterator();
+
+
+            //    Iterator<Cell> cellIter = myRow.cellIterator();
 //                while (cellIter.hasNext()) {
 //                    HSSFCell myCell = (HSSFCell) cellIter.next();
 //                  Log.i( "cell content", myCell.getStringCellValue()  );
@@ -319,7 +322,7 @@ public class BibleFragment extends Fragment {
                 public void onClick(View view) {
                     Toast.makeText(getActivity(), book_name + chapter, Toast.LENGTH_SHORT).show();
                     dismiss();
-                    readExcelFileFromAssets();
+                    new ReadExcel().execute();
                 }
             });
         }
