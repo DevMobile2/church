@@ -94,7 +94,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
          // Initialize FirebaseAuth
          mFirebaseAuth = FirebaseAuth.getInstance();
 
-
          // Initialize Facebook Login button
          loginButton = findViewById(R.id.login_button);
          mCallbackManager = CallbackManager.Factory.create();
