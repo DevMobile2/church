@@ -1,9 +1,6 @@
  package com.rameshmklll.church;
 
- import android.app.ActionBar;
  import android.content.Intent;
- import android.graphics.Color;
- import android.graphics.drawable.ColorDrawable;
  import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -117,7 +114,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
      private void updateUI(FirebaseUser currentUser) {
          Log.d(TAG, "updateUI");
-         Toast.makeText(this, " Logged in..", Toast.LENGTH_SHORT).show();
          startActivity(new Intent(this, DashBoard.class));
      }
 
@@ -242,8 +238,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
                              // Sign in success, update UI with the signed-in user's information
                              Log.d(TAG, "signInWithCredential:success");
                              FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                             PreferencesData.putLoggedIn(activity, true);
                              updateUI(user);
-
 
                          } else {
                              // If sign in fails, display a message to the user.
