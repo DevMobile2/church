@@ -32,7 +32,7 @@ public class FirstPage extends Fragment {
     Activity activity;
     CarouselView carouselView;
     public String TAG = FirstPage.class.getSimpleName();
-    int[] sampleImages = {R.drawable.mt, R.drawable.mt, R.drawable.mt, R.drawable.mt, R.drawable.mt};
+    int[] sampleImages = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4};
     private String userName;
     private TextView wish_id;
 

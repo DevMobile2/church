@@ -26,7 +26,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ import org.apache.poi.ss.usermodel.Row;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 
@@ -71,7 +74,7 @@ public class BibleFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private HSSFRow myRow;
-
+    SqliteController controller;
     public BibleFragment() {
         // Required empty public constructor
     }
@@ -122,6 +125,7 @@ public class BibleFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        controller = new SqliteController(getActivity());
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -130,7 +134,7 @@ public class BibleFragment extends Fragment {
         data = new ArrayList<TeluguBiblePojo>();
         adapter = new TeluguBibleAdapter(data);
         recyclerView.setAdapter(adapter);
-        new ReadExcel().execute();
+        new GetDataFromDatabase().execute(book_name);
     }
 
     @Override
@@ -153,7 +157,7 @@ public class BibleFragment extends Fragment {
    /*
     * File file = new File( filename); FileInputStream myInput = new
     * FileInputStream(file);
-    */
+    */SqliteController controller = new SqliteController(getActivity());
             data = new ArrayList<>();
             adapter.clearDataSet();
             InputStream myInput;
@@ -182,9 +186,19 @@ public class BibleFragment extends Fragment {
                 Cell cell_book_name = myRow.getCell(0);
                 Cell cell_chapter = myRow.getCell(1);
                 Cell cell_version = myRow.getCell(3);
+                Cell cell_content = myRow.getCell(2);
+                String book_name=String.valueOf(cell_book_name.getStringCellValue());
                 String chapter_Number= String.valueOf(Double.parseDouble(String.valueOf(cell_chapter.getNumericCellValue())));
+                String chapter_version= String.valueOf(Double.parseDouble(String.valueOf(cell_version.getNumericCellValue())));
+                String content= cell_content.getStringCellValue();
+                HashMap<String,String> map=new HashMap<>();
+                map.put("chapter_number",chapter_Number);
+                map.put("book_name",book_name);
+                map.put("version_number",chapter_version);
+                map.put("content",content);
+                controller.insertStudent(map);
                 Log.i("bookame", cell_book_name.getStringCellValue()+"and"+book_name+chapter+"and"+chapter);
-                if (String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name) /*&& chapter_Number.equalsIgnoreCase(chapter)*/) {
+              /*  if (String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name) *//*&& chapter_Number.equalsIgnoreCase(chapter)*//*) {
                     Log.i("teluguu", String.valueOf(cell_book_name.getStringCellValue()));
                     match = true;
                     Cell cell_content = myRow.getCell(2);
@@ -194,7 +208,7 @@ public class BibleFragment extends Fragment {
                     TeluguBiblePojo teluguBiblePojo = new TeluguBiblePojo(content, id);
                     data.add(teluguBiblePojo);
 
-                }
+                }*/
 
 
 
@@ -241,6 +255,37 @@ public class BibleFragment extends Fragment {
         getActivity().getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
+
+    class GetDataFromDatabase extends AsyncTask<String, Void, Void> {
+        ProgressDialog progressBar=new ProgressDialog(getActivity());
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setMessage("Loading...");
+            progressBar.show();
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            data.clear();
+         data=   controller.getStudentInfo(strings[0],version,chapter);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressBar.dismiss();
+            adapter = new TeluguBibleAdapter(data);
+            recyclerView.setAdapter(adapter);
+        }
+    }
+
+
+
+
+
+
     class ReadExcel extends AsyncTask<String, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -281,6 +326,9 @@ public class BibleFragment extends Fragment {
             spVersions = (Spinner) findViewById(R.id.spVersion);
             spChapters = (Spinner) findViewById(R.id.spChapter);
             spBooks = (Spinner) findViewById(R.id.spBookName);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, controller.getBookNames());
+
+            spBooks.setAdapter(adapter);
             btSearch = (Button) findViewById(R.id.btnReadExcel1);
             spBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -297,7 +345,7 @@ public class BibleFragment extends Fragment {
             spChapters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    chapter=adapterView.getSelectedItem().toString()+".0";
+                    chapter=adapterView.getSelectedItem().toString();
                     Toast.makeText(getActivity(), chapter, Toast.LENGTH_SHORT).show();
                 }
 
@@ -322,10 +370,16 @@ public class BibleFragment extends Fragment {
                 public void onClick(View view) {
                     Toast.makeText(getActivity(), book_name + chapter, Toast.LENGTH_SHORT).show();
                     dismiss();
-                    new ReadExcel().execute();
+                    new GetDataFromDatabase().execute(book_name,chapter);
+
                 }
             });
+
+
+
         }
 
     }
+
+
 }
