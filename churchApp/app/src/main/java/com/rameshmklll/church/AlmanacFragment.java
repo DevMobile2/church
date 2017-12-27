@@ -99,6 +99,7 @@ public class AlmanacFragment extends Fragment {
             }
         });
 
+        new ReadExcel().execute();
 
     }
 
@@ -113,7 +114,7 @@ public class AlmanacFragment extends Fragment {
 
 
     class ReadExcel extends AsyncTask<String,Void,Void> {
-ProgressDialog progress=new ProgressDialog(getActivity());
+        ProgressDialog progress=new ProgressDialog(getActivity());
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -124,7 +125,6 @@ ProgressDialog progress=new ProgressDialog(getActivity());
 
         @Override
         protected Void doInBackground(String... strings) {
-
             readExcelFileFromAssets();
             return null;
         }
@@ -152,7 +152,7 @@ ProgressDialog progress=new ProgressDialog(getActivity());
             assetManager=getActivity().getAssets();
 
             //  Don't forget to Change to your assets folder excel sheet
-            myInput = assetManager.open("AlmanacFin.xls");
+            myInput = assetManager.open("AlmanacFinal.xls");
 
             // Create a POIFSFileSystem object
             POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);

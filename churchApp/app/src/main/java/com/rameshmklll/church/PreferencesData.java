@@ -1,5 +1,6 @@
 package com.rameshmklll.church;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -14,6 +15,8 @@ public class PreferencesData {
     private static final String SHARED_PREF="credentials";
     private static SharedPreferences.Editor editor;
     private static final String IS_LOGGED_IN = "is_logged_in";
+
+
 
     public static synchronized void initPrefs(Context context) {
         if (preferences == null) {
@@ -60,4 +63,12 @@ public class PreferencesData {
     }
 
 
+//    public static void putSpinnerPos(Activity con, String book_name, String chapter, String version) {
+//
+//        if(preferences==null)
+//            preferences=con.getSharedPreferences(SHARED_PREF, 0);
+//        editor=preferences.edit();
+//        editor.putString(PREF_PROVIDER_TYPE, type);
+//        editor.apply();
+//    }
 }

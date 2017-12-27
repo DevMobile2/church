@@ -28,7 +28,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -42,6 +41,7 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +65,8 @@ public class BibleFragment extends Fragment {
     private static TeluguBibleAdapter adapter;
     ProgressDialog progress;
     AssetManager assetManager;
-    String chapter = "3.0", version = "1", book_name = "ఆదికాండము";
+    String chapter = "1", version = "1", book_name = "ఆదికాండము";
+    int chapter_pos=0, version_pos=0, book_name_pos=0;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     View view;
@@ -75,6 +76,7 @@ public class BibleFragment extends Fragment {
     private String mParam2;
     private HSSFRow myRow;
     SqliteController controller;
+    Activity activity;
     public BibleFragment() {
         // Required empty public constructor
     }
@@ -126,15 +128,20 @@ public class BibleFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         controller = new SqliteController(getActivity());
+        activity = getActivity();
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), layoutManager.getOrientation()));
         data = new ArrayList<TeluguBiblePojo>();
-        adapter = new TeluguBibleAdapter(data);
+
+        new GetDataFromDatabase().execute(book_name,chapter, version);
+
+
+        adapter = new TeluguBibleAdapter(data, version, activity);
         recyclerView.setAdapter(adapter);
-        new GetDataFromDatabase().execute(book_name);
+//        new GetDataFromDatabase().execute(book_name);
     }
 
     @Override
@@ -262,7 +269,7 @@ public class BibleFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setMessage("Loading...");
-            progressBar.show();
+//            progressBar.show();
         }
 
         @Override
@@ -276,7 +283,7 @@ public class BibleFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressBar.dismiss();
-            adapter = new TeluguBibleAdapter(data);
+            adapter = new TeluguBibleAdapter(data, version, activity);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -304,7 +311,7 @@ public class BibleFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progress.dismiss();
-            adapter = new TeluguBibleAdapter(data);
+            adapter = new TeluguBibleAdapter(data, version, activity);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -326,14 +333,36 @@ public class BibleFragment extends Fragment {
             spVersions = (Spinner) findViewById(R.id.spVersion);
             spChapters = (Spinner) findViewById(R.id.spChapter);
             spBooks = (Spinner) findViewById(R.id.spBookName);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, controller.getBookNames());
+            try {
+                controller.createDataBase();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, controller.getBookNames());
 
             spBooks.setAdapter(adapter);
             btSearch = (Button) findViewById(R.id.btnReadExcel1);
+
+
+            if (version_pos>=0){
+                spVersions.setSelection(version_pos);
+            }
+
+            if (chapter_pos>=0){
+                spChapters.setSelection(chapter_pos);
+            }
+
+            if (book_name_pos>=0){
+                spBooks.setSelection(book_name_pos);
+            }
+
+
             spBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     book_name=adapterView.getSelectedItem().toString();
+                    book_name_pos = adapterView.getSelectedItemPosition();
                     Toast.makeText(getActivity(), book_name, Toast.LENGTH_SHORT).show();
                 }
 
@@ -346,6 +375,7 @@ public class BibleFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     chapter=adapterView.getSelectedItem().toString();
+                    chapter_pos = adapterView.getSelectedItemPosition();
                     Toast.makeText(getActivity(), chapter, Toast.LENGTH_SHORT).show();
                 }
 
@@ -357,7 +387,8 @@ public class BibleFragment extends Fragment {
             spVersions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    version=adapterView.getSelectedItem().toString();
+                    version_pos = adapterView.getSelectedItemPosition();
+                    version = adapterView.getSelectedItem().toString();
                 }
 
                 @Override
@@ -368,9 +399,12 @@ public class BibleFragment extends Fragment {
             btSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+//                    PreferencesData.putSpinnerPos(activity, book_name, chapter, version);
+
                     Toast.makeText(getActivity(), book_name + chapter, Toast.LENGTH_SHORT).show();
                     dismiss();
-                    new GetDataFromDatabase().execute(book_name,chapter);
+                    new GetDataFromDatabase().execute(book_name,chapter, version);
 
                 }
             });
@@ -381,5 +415,8 @@ public class BibleFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }
