@@ -1,5 +1,7 @@
 package com.rameshmklll.church.adapters;
 
+import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 public class TeluguBibleAdapter extends RecyclerView.Adapter<TeluguBibleAdapter.MyViewHolder> {
 
     private ArrayList<TeluguBiblePojo> dataSet;
+    private int version;
+    Activity activity;
 
     public void clearDataSet() {
         dataSet=new ArrayList<>();
@@ -39,8 +43,11 @@ public class TeluguBibleAdapter extends RecyclerView.Adapter<TeluguBibleAdapter.
         }
     }
 
-    public TeluguBibleAdapter(ArrayList<TeluguBiblePojo> data) {
+    public TeluguBibleAdapter(ArrayList<TeluguBiblePojo> data, String version, Activity activity) {
         this.dataSet = data;
+        if (version!=null)
+        this.version = Integer.valueOf(version)-1;
+        this.activity = activity;
     }
 
     @Override
@@ -61,6 +68,15 @@ public class TeluguBibleAdapter extends RecyclerView.Adapter<TeluguBibleAdapter.
         TextView textViewName = holder.textViewName;
         TextView textViewVersion = holder.textViewVersion;
         textViewName.setText(dataSet.get(listPosition).getVersion()+" . "+dataSet.get(listPosition).getName());
+
+        if (version==listPosition){
+            textViewName.setTextColor(ContextCompat.getColor(activity, R.color.colorAccent));
+
+        }
+        else {
+            textViewName.setTextColor(ContextCompat.getColor(activity, R.color.textcolor_light_grey));
+
+        }
 
     }
 

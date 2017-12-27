@@ -86,6 +86,7 @@ public class DashBoard extends AppCompatActivity
             finish();
             return;
         } else {
+            Toast.makeText(this, " Logged in..", Toast.LENGTH_SHORT).show();
             mUsername = mFirebaseUser.getDisplayName();
             tv_user.setText(mUsername);
             tv_email.setText(mFirebaseUser.getEmail());
@@ -289,4 +290,7 @@ startActivity(intent);
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
+
+
+
 }

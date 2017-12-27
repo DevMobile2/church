@@ -34,9 +34,9 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-       // new ReadExcel().execute();
-        Intent intent=new Intent(SplashScreen.this,MainActivity.class);
-        startActivity(intent);
+     new ReadExcel().execute();
+/*        Intent intent=new Intent(SplashScreen.this,MainActivity.class);
+        startActivity(intent);*/
     }
 
 
@@ -48,7 +48,7 @@ public class SplashScreen extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setMessage("Loading...");
+            progress.setMessage("Loading bible...");
             progress.show();
         }
 
@@ -71,7 +71,7 @@ public class SplashScreen extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setMessage("Loading");
+            progress.setMessage("Loading almanic");
             progress.show();
 
         }

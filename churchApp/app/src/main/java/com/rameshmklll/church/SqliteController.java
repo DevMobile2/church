@@ -1,8 +1,13 @@
 package com.rameshmklll.church;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,12 +19,15 @@ import com.rameshmklll.church.pojos.TeluguBiblePojo;
 
 public class SqliteController extends SQLiteOpenHelper {
     private static final String LOGCAT = null;
+    private static  String DB_PATH = "";
+    private static  String DB_NAME = "androidsqlite.db" ;
     Context context;
 
     public SqliteController(Context applicationcontext) {
-        super(applicationcontext, "androidsqlite.db", null, 1);
-        context=applicationcontext;
+        super(applicationcontext, DB_NAME, null, 1);
+        context = applicationcontext;
         Log.d(LOGCAT, "Created");
+        DB_PATH = context.getDatabasePath(DB_NAME).toString();
     }
 
     @Override
@@ -108,9 +116,17 @@ public class SqliteController extends SQLiteOpenHelper {
     public ArrayList<String> getBookNames(){
         ArrayList<String> book_names=new ArrayList<>();
         String path="/data/data/"+context.getPackageName()+"/databases/";
-        SQLiteDatabase database = SQLiteDatabase.openDatabase(path+"androidsqlite",null,SQLiteDatabase.OPEN_READONLY);//this.getReadableDatabase();
+        String myPath = DB_PATH;
+
+//        SQLiteDatabase database = SQLiteDatabase.openDatabase(path+"androidsqlitenew",null, SQLiteDatabase.OPEN_READONLY);//this.getReadableDatabase();
+        SQLiteDatabase database = SQLiteDatabase.openDatabase(myPath,null, SQLiteDatabase.OPEN_READONLY);//this.getReadableDatabase();
+
+
+
+
         String selectQuery = "select DISTINCT book_name from  Telugu_Bible" ;
         Cursor cursor=database.rawQuery(selectQuery,null);
+        Log.d("Db_length: ", cursor.getCount()+"" + "Hi");
         if(cursor.moveToFirst()){
             do {
                 book_names.add(cursor.getString(0));
@@ -136,6 +152,82 @@ public class SqliteController extends SQLiteOpenHelper {
             while (cursor.moveToNext());
         }
         return  data;
+    }
+
+
+    /**
+     * Creates a empty database on the system and rewrites it with your own database.
+     * */
+    public void createDataBase() throws IOException {
+
+        boolean dbExist = checkDataBase();
+
+        if(dbExist){
+            //do nothing - database already exist
+        }else{
+
+            //By calling this method and empty database will be created into the default system path
+            //of your application so we are gonna be able to overwrite that database with our database.
+            this.getWritableDatabase();
+
+            copyDataBase();
+
+        }
+
+    }
+
+    private void copyDataBase() {
+
+        //Open your local db as the input stream
+        InputStream myInput = null;
+        try {
+            myInput = context.getAssets().open(DB_NAME);
+            // Path to the just created empty db
+            String outFileName = DB_PATH ;
+
+            //Open the empty db as the output stream
+            OutputStream myOutput = new FileOutputStream(outFileName);
+
+            //transfer bytes from the inputfile to the outputfile
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = myInput.read(buffer))>0){
+                myOutput.write(buffer, 0, length);
+            }
+
+            //Close the streams
+            myOutput.flush();
+            myOutput.close();
+            myInput.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private boolean checkDataBase() {
+
+        //  this.getReadableDatabase();
+
+        SQLiteDatabase checkDB = null;
+
+        try{
+            String myPath = DB_PATH ;
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+
+        }catch(SQLiteException e){
+
+            //database does't exist yet.
+
+        }
+
+        if(checkDB != null){
+
+            checkDB.close();
+
+        }
+
+        return checkDB != null ? true : false;
     }
 
 
