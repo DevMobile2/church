@@ -1,20 +1,14 @@
 package com.rameshmklll.church;
 
-
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.TextView;
+
+import com.rameshmklll.church.adapters.TeluguBibleAdapter;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -22,103 +16,63 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**
- * Created by MRamesh on 19-12-2017.
- */
+public class SplashScreen extends AppCompatActivity {
 
-public class AlmanacFragment extends Fragment {
-
-    View view;
-    Button btDate;
-    private int year, month, day;
-    private HSSFRow myRow;
-    String date;
-    TextView tvMorning,tvEvenining;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        setContentView(R.layout.activity_splash_screen);
+       // new ReadExcel().execute();
+        Intent intent=new Intent(SplashScreen.this,MainActivity.class);
+        startActivity(intent);
     }
 
 
-    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
-            year = arg1;
-            month = arg2+1;
-            day = arg3;
-            String newdate,newmonth;
-            if(day<10)
-                newdate="0"+day;
-            else
-                newdate= String.valueOf(day);
-            if(month<10)
-                newmonth="0"+month;
-            else
-                newmonth= String.valueOf(month);
-            date=newdate+"/"+newmonth+"/"+year;
-           // readExcelFileFromAssets();
-            getData(date);
-        }
-    };
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view=inflater.inflate(R.layout.fragment_almanac, container, false);
-        tvEvenining=view.findViewById(R.id.tvEvening);
-        tvMorning=view.findViewById(R.id.tvMorning);
-        return  view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-
-        super.onActivityCreated(savedInstanceState);
-        btDate=(Button) view.findViewById(R.id.btDatepicker);
-        btDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog mDialog = new DatePickerDialog(getActivity(), myDateListener,
-                        year, month, day);
-                mDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 20000);
-                mDialog.show();
-            }
-        });
 
 
-    }
 
-    public void getData(String date) {
-        SqliteController sqliteController=new SqliteController(getActivity());
-        HashMap<String,String> data=sqliteController.getAlmanic(date);
-       tvMorning.setText("Morning"+"/n/n"+data.get("mornning_content"));
-        tvEvenining.setText("Evening"+"/n/n"+data.get("evening_content"));
-        btDate.setText(data.get("date"));
-      //  Log.i("dataaaaa",data.get("mornning_content"));
-    }
-
-
-    class ReadExcel extends AsyncTask<String,Void,Void> {
-ProgressDialog progress=new ProgressDialog(getActivity());
+    class ReadExcel extends AsyncTask<String, Void, Void> {
+        ProgressDialog progress=new ProgressDialog(SplashScreen.this);
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           progress.setMessage("Loading");
-           progress.show();
+            progress.setMessage("Loading...");
+            progress.show();
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            insertBibleInDatabase();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progress.dismiss();
+            new ReadAlmanic().execute();
+        }
+    }
+
+    class ReadAlmanic extends AsyncTask<String,Void,Void> {
+        ProgressDialog progress=new ProgressDialog(SplashScreen.this);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.setMessage("Loading");
+            progress.show();
 
         }
 
@@ -133,6 +87,8 @@ ProgressDialog progress=new ProgressDialog(getActivity());
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progress.dismiss();
+            Intent intent=new Intent(SplashScreen.this,MainActivity.class);
+            startActivity(intent);
 
         }
     }
@@ -146,10 +102,10 @@ ProgressDialog progress=new ProgressDialog(getActivity());
    /*
     * File file = new File( filename); FileInputStream myInput = new
     * FileInputStream(file);
-    */SqliteController sqliteController=new SqliteController(getActivity());
-            AssetManager assetManager=getActivity().getAssets();
+    */SqliteController sqliteController=new SqliteController(this);
+            AssetManager assetManager=getAssets();
             InputStream myInput;
-            assetManager=getActivity().getAssets();
+            assetManager=getAssets();
 
             //  Don't forget to Change to your assets folder excel sheet
             myInput = assetManager.open("AlmanacFin.xls");
@@ -159,7 +115,7 @@ ProgressDialog progress=new ProgressDialog(getActivity());
 
             // Create a workbook using the File System
             HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
-
+            HSSFRow myRow;
             // Get the first sheet from workbook
             HSSFSheet mySheet = myWorkBook.getSheetAt(0);
 
@@ -223,7 +179,85 @@ ProgressDialog progress=new ProgressDialog(getActivity());
         return;
     }
 
+    public void insertBibleInDatabase() {
 
+        try {
+            // Creating Input Stream
+   /*
+    * File file = new File( filename); FileInputStream myInput = new
+    * FileInputStream(file);
+    */SqliteController controller = new SqliteController(this);
+
+            InputStream myInput;
+         AssetManager assetManager = this.getAssets();
+
+            //  Don't forget to Change to your assets folder excel sheet
+            myInput = assetManager.open("telugu_bible.xls");
+
+            // Create a POIFSFileSystem object
+            POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
+
+            // Create a workbook using the File System
+            HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
+
+            // Get the first sheet from workbook
+            HSSFSheet mySheet = myWorkBook.getSheetAt(0);
+    HSSFRow myRow;
+            /** We now need something to iterate through the cells. **/
+            Iterator<Row> rowIter = mySheet.rowIterator();
+            rowIter.next();
+
+
+            while (rowIter.hasNext()) {
+                // HSSFRow  HSSFRowmyRow = (HSSFRow) rowIter.next();
+                myRow = (HSSFRow) rowIter.next();
+                Cell cell_book_name = myRow.getCell(0);
+                Cell cell_chapter = myRow.getCell(1);
+                Cell cell_version = myRow.getCell(3);
+                Cell cell_content = myRow.getCell(2);
+                String book_name=String.valueOf(cell_book_name.getStringCellValue());
+                String chapter_Number= String.valueOf(Double.parseDouble(String.valueOf(cell_chapter.getNumericCellValue())));
+                String chapter_version= String.valueOf(Double.parseDouble(String.valueOf(cell_version.getNumericCellValue())));
+                String content= cell_content.getStringCellValue();
+                HashMap<String,String> map=new HashMap<>();
+                map.put("chapter_number",chapter_Number);
+                map.put("book_name",book_name);
+                map.put("version_number",chapter_version);
+                map.put("content",content);
+                controller.insertStudent(map);
+              //  Log.i("bookame", cell_book_name.getStringCellValue()+"and"+book_name+chapter+"and"+chapter);
+              /*  if (String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name) *//*&& chapter_Number.equalsIgnoreCase(chapter)*//*) {
+                    Log.i("teluguu", String.valueOf(cell_book_name.getStringCellValue()));
+                    match = true;
+                    Cell cell_content = myRow.getCell(2);
+                    String content = String.valueOf(cell_content.getStringCellValue());
+                    int id = (int) cell_version.getNumericCellValue();
+                    Log.i("chapters", String.valueOf(cell_chapter.getNumericCellValue()));
+                    TeluguBiblePojo teluguBiblePojo = new TeluguBiblePojo(content, id);
+                    data.add(teluguBiblePojo);
+
+                }*/
+
+
+
+
+                //    Iterator<Cell> cellIter = myRow.cellIterator();
+//                while (cellIter.hasNext()) {
+//                    HSSFCell myCell = (HSSFCell) cellIter.next();
+//                  Log.i( "cell content", myCell.getStringCellValue()  );
+//                    Log.e("FileUtils", "Cell Value: " + myCell.toString()+ " Index :" +myCell.getColumnIndex());
+//                    // Toast.makeText(getApplicationContext(), "cell Value: " +
+//                    // myCell.toString(), Toast.LENGTH_SHORT).show();
+//                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return;
+    }
     String getFormattedDate(String input){
 
         DateFormat inputFormat = new SimpleDateFormat(
@@ -247,7 +281,4 @@ ProgressDialog progress=new ProgressDialog(getActivity());
         System.out.println(output);
         return  output;
     }
-
-
-
 }

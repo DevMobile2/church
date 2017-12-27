@@ -20,12 +20,12 @@ public class Gallery extends Fragment {
     GridView androidGridView;
     View mv;
     Integer[] imageIDs = {
-            R.drawable.c1, R.drawable.c1, R.drawable.c1,
-            R.drawable.c1, R.drawable.c1, R.drawable.c1,
-            R.drawable.c1, R.drawable.c1, R.drawable.c1,
-            R.drawable.c1, R.drawable.c1, R.drawable.c1,
-            R.drawable.c1, R.drawable.c1, R.drawable.c1,
-            R.drawable.c1, R.drawable.c1, R.drawable.c1,
+            R.drawable.image1, R.drawable.image2, R.drawable.image2,
+            R.drawable.image1, R.drawable.image2, R.drawable.image2,
+            R.drawable.image1, R.drawable.image2, R.drawable.image2,
+            R.drawable.image1, R.drawable.image2, R.drawable.image2,
+            R.drawable.image1, R.drawable.image2, R.drawable.image2,
+            R.drawable.image1, R.drawable.image2, R.drawable.image2,
     };
     @Override
     public void onCreate(Bundle savedInstanceState) {
