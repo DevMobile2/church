@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -20,12 +21,12 @@ public class Gallery extends Fragment {
     GridView androidGridView;
     View mv;
     Integer[] imageIDs = {
-            R.drawable.image1, R.drawable.image2, R.drawable.image3,
-            R.drawable.image1, R.drawable.image2, R.drawable.image3,
-            R.drawable.image1, R.drawable.image2, R.drawable.image3,
-            R.drawable.image1, R.drawable.image2, R.drawable.image3,
-            R.drawable.image1, R.drawable.image2, R.drawable.image3,
-            R.drawable.image1, R.drawable.image2, R.drawable.image3,
+            R.drawable.insidepost_coding, R.drawable.christ_the_redeemer, R.drawable.signin_,
+            R.drawable.insidepost_coding, R.drawable.christ_the_redeemer, R.drawable.signin_,
+            R.drawable.insidepost_coding, R.drawable.christ_the_redeemer, R.drawable.signin_,
+            R.drawable.insidepost_coding, R.drawable.christ_the_redeemer, R.drawable.signin_,
+            R.drawable.insidepost_coding, R.drawable.christ_the_redeemer, R.drawable.signin_,
+            R.drawable.insidepost_coding, R.drawable.christ_the_redeemer, R.drawable.signin_,
     };
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class Gallery extends Fragment {
                 Intent intent =  new Intent(getActivity(), ImageFullView.class);
                 intent.putExtra("pos", position);
                 getActivity().startActivity(intent);
-
             }
         });
         return mv;
@@ -84,9 +84,12 @@ public class Gallery extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
            View GalleryItem=getActivity().getLayoutInflater().inflate(R.layout.gallery_item,null,false);
             ImageView mImageView;
-
-
+            TextView tv_gallery;
                 mImageView = GalleryItem.findViewById(R.id.image);
+            tv_gallery  = GalleryItem.findViewById(R.id.tv_gallery);
+            int pos = position+1;
+            tv_gallery.setText("Gallery "+pos);
+
               /*  mImageView.setLayoutParams(new GridView.LayoutParams(400, 400));
                 mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 mImageView.setPadding(16, 16, 16, 16);*/

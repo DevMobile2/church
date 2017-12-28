@@ -167,8 +167,6 @@ public class AlmanacFragment extends Fragment {
             Iterator<Row> rowIter = mySheet.rowIterator();
             rowIter.next();
 
-
-
             while (rowIter.hasNext()) {
                 // HSSFRow  HSSFRowmyRow = (HSSFRow) rowIter.next();
                 myRow = (HSSFRow) rowIter.next();
@@ -204,7 +202,6 @@ public class AlmanacFragment extends Fragment {
 //                }
 
 
-
                 Iterator<Cell> cellIter = myRow.cellIterator();
 //                while (cellIter.hasNext()) {
 //                    HSSFCell myCell = (HSSFCell) cellIter.next();
@@ -214,7 +211,6 @@ public class AlmanacFragment extends Fragment {
 //                    // myCell.toString(), Toast.LENGTH_SHORT).show();
 //                }
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
