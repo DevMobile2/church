@@ -188,7 +188,6 @@ public class AlmanacFragment extends Fragment {
 //                }
             }
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
