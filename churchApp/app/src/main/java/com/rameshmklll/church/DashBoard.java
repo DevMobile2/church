@@ -192,23 +192,27 @@ public class DashBoard extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.sign_out_menu:
-                String b = PreferencesData.getProviderType(activity);
-                if ( b.equalsIgnoreCase("google.com")) {
-                    mFirebaseAuth.signOut();
-                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-                    mUsername = ANONYMOUS;
-
-                }else {
-                    mFirebaseAuth.signOut();
-                    LoginManager.getInstance().logOut();
-                }
-                PreferencesData.putLoggedIn(this, false);
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
+              performLogout();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void performLogout() {
+        String b = PreferencesData.getProviderType(activity);
+        if ( b.equalsIgnoreCase("google.com")) {
+            mFirebaseAuth.signOut();
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+            mUsername = ANONYMOUS;
+
+        }else {
+            mFirebaseAuth.signOut();
+            LoginManager.getInstance().logOut();
+        }
+        PreferencesData.putLoggedIn(this, false);
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -261,13 +265,16 @@ public class DashBoard extends AppCompatActivity
                     .addToBackStack("Gallery").commit();
         }
         else if(id==R.id.fb){
-Intent intent=getOpenFacebookIntent(this);
-startActivity(intent);
+        Intent intent=getOpenFacebookIntent(this);
+           startActivity(intent);
 
            /* Intent intent = new Intent("android.intent.category.LAUNCHER");
             intent.setClassName("com.facebook.katana", "com.facebook.katana.LoginActivity");
             startActivity(intent);*/
 
+        }
+        else if(id==R.id.logout){
+            performLogout();
         }
         titles.add(title);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -277,12 +284,7 @@ startActivity(intent);
 
     public static Intent getOpenFacebookIntent(Context context) {
 
-        try {
-            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/<id_here>"));
-        } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/csichristchurcheluru"));
-        }
+     return    new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/csichristchurcheluru"));
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,10 +25,10 @@ public class FirstPage extends Fragment {
     Activity activity;
     CarouselView carouselView;
     public String TAG = FirstPage.class.getSimpleName();
-    int[] sampleImages = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4};
+    int[] sampleImages = {R.drawable.image1, R.drawable.image1, R.drawable.image1, R.drawable.image1};
     private String userName;
     private TextView wish_id,tvEvenining,tvMorning;
-
+    SqliteController controller;
 
     public FirstPage() {
 
@@ -57,6 +58,7 @@ public class FirstPage extends Fragment {
         };
         carouselView.setImageListener(imageListener);
         activity = getActivity();
+         controller=new SqliteController(getActivity());
         return mv;
     }
 
@@ -65,14 +67,27 @@ public class FirstPage extends Fragment {
         super.onActivityCreated(savedInstanceState);
             TextView name = mv.findViewById(R.id.tv_user);
             wish_id = mv.findViewById(R.id.wish_id);
-            name.setText(userName);
+            if(userName.equalsIgnoreCase("anonymous")){
+                name.setVisibility(View.GONE);
+            }
+            else {
+                name.setText(userName);
+            }
             getCurrentTime();
             setAlmanicDetails();
     }
 
     private void setAlmanicDetails() {
+        try {
+
+            controller.createDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         getData(DateGetter.getDate());
     }
+
+
     public void getData(String date) {
         SqliteController sqliteController = new SqliteController(getActivity());
         HashMap<String, String> data = sqliteController.getAlmanic(date);

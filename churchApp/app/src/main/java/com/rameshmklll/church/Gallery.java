@@ -13,7 +13,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class Gallery extends Fragment {
@@ -52,7 +51,7 @@ public class Gallery extends Fragment {
         androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent,
                                     View v, int position, long id) {
-                Toast.makeText(getActivity(), "Grid Item " + (position ) + " Selected", Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getActivity(), "Grid Item " + (position ) + " Selected", Toast.LENGTH_LONG).show();
                 Intent intent =  new Intent(getActivity(), ImageFullView.class);
                 intent.putExtra("pos", position);
                 getActivity().startActivity(intent);

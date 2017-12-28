@@ -46,7 +46,7 @@
             android:title="Connect to facebook" />
         <item
             android:iconTint="#2196F3"
-            android:id="@+id/share"
+            android:id="@+id/logout"
             android:icon="@drawable/ic_logout"
             android:title="Log out" />
 
