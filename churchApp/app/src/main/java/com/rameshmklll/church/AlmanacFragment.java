@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +22,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 
 import java.io.InputStream;
 import java.text.DateFormat;
@@ -42,10 +41,31 @@ public class AlmanacFragment extends Fragment {
 
     View view;
     Button btDate;
+    String date;
+    TextView tvMorning, tvEvenining;
     private int year, month, day;
     private HSSFRow myRow;
-    String date;
-    TextView tvMorning,tvEvenining;
+    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+            year = arg1;
+            month = arg2 + 1;
+            day = arg3;
+            String newdate, newmonth;
+            if (day < 10)
+                newdate = "0" + day;
+            else
+                newdate = String.valueOf(day);
+            if (month < 10)
+                newmonth = "0" + month;
+            else
+                newmonth = String.valueOf(month);
+            date = newdate + "/" + newmonth + "/" + year;
+            // readExcelFileFromAssets();
+            getData(date);
+        }
+    };
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,42 +73,21 @@ public class AlmanacFragment extends Fragment {
 
     }
 
-
-    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
-            year = arg1;
-            month = arg2+1;
-            day = arg3;
-            String newdate,newmonth;
-            if(day<10)
-                newdate="0"+day;
-            else
-                newdate= String.valueOf(day);
-            if(month<10)
-                newmonth="0"+month;
-            else
-                newmonth= String.valueOf(month);
-            date=newdate+"/"+newmonth+"/"+year;
-           // readExcelFileFromAssets();
-            getData(date);
-        }
-    };
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view=inflater.inflate(R.layout.fragment_almanac, container, false);
-        tvEvenining=view.findViewById(R.id.tvEvening);
-        tvMorning=view.findViewById(R.id.tvMorning);
-        return  view;
+        view = inflater.inflate(R.layout.fragment_almanac, container, false);
+        tvEvenining = view.findViewById(R.id.tvEvening);
+        tvMorning = view.findViewById(R.id.tvMorning);
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        btDate=(Button) view.findViewById(R.id.btDatepicker);
+        btDate = (Button) view.findViewById(R.id.btDatepicker);
         btDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,45 +98,20 @@ public class AlmanacFragment extends Fragment {
             }
         });
 
-      //  new ReadExcel().execute();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Almanic");
+        getData(DateGetter.getDate());
+        //  new ReadExcel().execute();
 
     }
 
     public void getData(String date) {
-        SqliteController sqliteController=new SqliteController(getActivity());
-        HashMap<String,String> data=sqliteController.getAlmanic(date);
-       tvMorning.setText("Morning"+"/n/n"+data.get("mornning_content"));
-        tvEvenining.setText("Evening"+"/n/n"+data.get("evening_content"));
+        SqliteController sqliteController = new SqliteController(getActivity());
+        HashMap<String, String> data = sqliteController.getAlmanic(date);
+        tvMorning.setText( data.get("mornning_content"));
+        tvEvenining.setText(data.get("evening_content"));
         btDate.setText(data.get("date"));
-      //  Log.i("dataaaaa",data.get("mornning_content"));
+        //  Log.i("dataaaaa",data.get("mornning_content"));
     }
-
-
-    class ReadExcel extends AsyncTask<String,Void,Void> {
-        ProgressDialog progress=new ProgressDialog(getActivity());
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-           progress.setMessage("Loading");
-           progress.show();
-
-        }
-
-        @Override
-        protected Void doInBackground(String... strings) {
-            readExcelFileFromAssets();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            progress.dismiss();
-
-        }
-    }
-
-
 
     public void readExcelFileFromAssets() {
 
@@ -146,10 +120,11 @@ public class AlmanacFragment extends Fragment {
    /*
     * File file = new File( filename); FileInputStream myInput = new
     * FileInputStream(file);
-    */SqliteController sqliteController=new SqliteController(getActivity());
-            AssetManager assetManager=getActivity().getAssets();
+    */
+            SqliteController sqliteController = new SqliteController(getActivity());
+            AssetManager assetManager = getActivity().getAssets();
             InputStream myInput;
-            assetManager=getActivity().getAssets();
+            assetManager = getActivity().getAssets();
 
             //  Don't forget to Change to your assets folder excel sheet
             myInput = assetManager.open("AlmanacFinal.xls");
@@ -168,21 +143,20 @@ public class AlmanacFragment extends Fragment {
             rowIter.next();
 
 
-
             while (rowIter.hasNext()) {
                 // HSSFRow  HSSFRowmyRow = (HSSFRow) rowIter.next();
                 myRow = (HSSFRow) rowIter.next();
-                Cell cell_date=myRow.getCell(0);
-                Cell cell_morning=myRow.getCell(2);
-                Cell cell_evening=myRow.getCell(3);
-                String unformattedDate=String.valueOf(cell_date.getDateCellValue());
-                String morning_content=String.valueOf(cell_morning.getStringCellValue());
-                String evening_content= String.valueOf(cell_evening .getStringCellValue());
-                String date_new =getFormattedDate(String.valueOf(cell_date.getDateCellValue()));
-                HashMap<String,String> map=new HashMap<>();
-                map.put("date",date_new);
-                map.put("morning_content",morning_content);
-                map.put("evening_content",evening_content);
+                Cell cell_date = myRow.getCell(0);
+                Cell cell_morning = myRow.getCell(2);
+                Cell cell_evening = myRow.getCell(3);
+                String unformattedDate = String.valueOf(cell_date.getDateCellValue());
+                String morning_content = String.valueOf(cell_morning.getStringCellValue());
+                String evening_content = String.valueOf(cell_evening.getStringCellValue());
+                String date_new = getFormattedDate(String.valueOf(cell_date.getDateCellValue()));
+                HashMap<String, String> map = new HashMap<>();
+                map.put("date", date_new);
+                map.put("morning_content", morning_content);
+                map.put("evening_content", evening_content);
                 sqliteController.insertAlmanic(map);
 //                if(unformattedDate!="null") {
 //                    String date_new =getFormattedDate(String.valueOf(cell_date.getDateCellValue()));
@@ -204,7 +178,6 @@ public class AlmanacFragment extends Fragment {
 //                }
 
 
-
                 Iterator<Cell> cellIter = myRow.cellIterator();
 //                while (cellIter.hasNext()) {
 //                    HSSFCell myCell = (HSSFCell) cellIter.next();
@@ -223,8 +196,7 @@ public class AlmanacFragment extends Fragment {
         return;
     }
 
-
-    String getFormattedDate(String input){
+    String getFormattedDate(String input) {
 
         DateFormat inputFormat = new SimpleDateFormat(
                 "EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
@@ -245,9 +217,33 @@ public class AlmanacFragment extends Fragment {
 
         String output = outputFormat.format(date);
         System.out.println(output);
-        return  output;
+        return output;
     }
 
+    class ReadExcel extends AsyncTask<String, Void, Void> {
+        ProgressDialog progress = new ProgressDialog(getActivity());
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.setMessage("Loading");
+            progress.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            readExcelFileFromAssets();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progress.dismiss();
+
+        }
+    }
 
 
 }
