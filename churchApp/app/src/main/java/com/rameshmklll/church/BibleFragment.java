@@ -135,9 +135,12 @@ public class BibleFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), layoutManager.getOrientation()));
         data = new ArrayList<TeluguBiblePojo>();
-
-        new GetDataFromDatabase().execute(book_name,chapter, version);
-
+        try {
+            controller.createDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+   new GetDataFromDatabase().execute(book_name, chapter, version);
 
         adapter = new TeluguBibleAdapter(data, version, activity);
         recyclerView.setAdapter(adapter);
@@ -339,7 +342,7 @@ public class BibleFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, controller.getBookNames());
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, controller.getBookNames());
 
             spBooks.setAdapter(adapter);
             btSearch = (Button) findViewById(R.id.btnReadExcel1);
@@ -356,7 +359,6 @@ public class BibleFragment extends Fragment {
             if (book_name_pos>=0){
                 spBooks.setSelection(book_name_pos);
             }
-
 
             spBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -399,9 +401,6 @@ public class BibleFragment extends Fragment {
             btSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-//                    PreferencesData.putSpinnerPos(activity, book_name, chapter, version);
-
                     Toast.makeText(getActivity(), book_name + chapter, Toast.LENGTH_SHORT).show();
                     dismiss();
                     new GetDataFromDatabase().execute(book_name,chapter, version);

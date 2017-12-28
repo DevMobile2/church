@@ -99,7 +99,7 @@ public class AlmanacFragment extends Fragment {
             }
         });
 
-        new ReadExcel().execute();
+      //  new ReadExcel().execute();
 
     }
 
