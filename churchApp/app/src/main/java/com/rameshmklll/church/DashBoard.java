@@ -1,11 +1,11 @@
 package com.rameshmklll.church;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -260,11 +260,30 @@ public class DashBoard extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "Almanac")
                     .addToBackStack("Gallery").commit();
         }
+        else if(id==R.id.fb){
+Intent intent=getOpenFacebookIntent(this);
+startActivity(intent);
+
+           /* Intent intent = new Intent("android.intent.category.LAUNCHER");
+            intent.setClassName("com.facebook.katana", "com.facebook.katana.LoginActivity");
+            startActivity(intent);*/
+
+        }
         titles.add(title);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 
+
+    public static Intent getOpenFacebookIntent(Context context) {
+
+        try {
+            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/<id_here>"));
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/csichristchurcheluru"));
+        }
+    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

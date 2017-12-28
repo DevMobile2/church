@@ -15,11 +15,7 @@
             android:id="@+id/bible"
             android:icon="@drawable/ic_menu_camera"
             android:title="Bible" />
-        <item
-            android:iconTint="#2196F3"
-            android:id="@+id/hymner"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Hymner" />
+
         <item
             android:iconTint="#2196F3"
             android:id="@+id/almanac"
@@ -47,6 +43,11 @@
             android:id="@+id/share"
             android:icon="@drawable/ic_menu_manage"
             android:title="Share" />
+        <item
+            android:iconTint="#2196F3"
+            android:id="@+id/fb"
+            android:icon="@drawable/ic_action_facebook"
+            android:title="Connect to facebook" />
 
     </group>
 

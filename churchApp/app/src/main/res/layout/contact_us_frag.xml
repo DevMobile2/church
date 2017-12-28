@@ -38,8 +38,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:src="@drawable/insidepost_coding"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,6 +62,7 @@
 
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -74,32 +74,37 @@
             style="@style/textview_header"
             android:layout_weight=".3"/>
         <TextView
-            android:visibility="gone"
-            android:text="@string/num"
+            android:visibility="visible"
+            android:text="7075071777"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             style="@style/TextAppearance.AppCompat.Subhead"/>
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="1">
+
         <TextView
-            android:text="@string/email_incharge"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             style="@style/textview_header"
-            android:layout_weight=".5"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:text="@string/email_incharge" />
         <TextView
-            android:text="church@gmail.com"
-            android:layout_width="0dp"
+            android:layout_marginTop="5dp"
+            android:text="esbnath@gmail.com \n csichristchurch1864@gmail.com \n bodapatinaveen12@gmail.com"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
             style="@style/TextAppearance.AppCompat.Subhead"/>
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -118,6 +123,8 @@
             android:layout_weight=".5"/>
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

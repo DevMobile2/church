@@ -20,12 +20,12 @@ public class Gallery extends Fragment {
     GridView androidGridView;
     View mv;
     Integer[] imageIDs = {
-            R.drawable.image1, R.drawable.image2, R.drawable.image2,
-            R.drawable.image1, R.drawable.image2, R.drawable.image2,
-            R.drawable.image1, R.drawable.image2, R.drawable.image2,
-            R.drawable.image1, R.drawable.image2, R.drawable.image2,
-            R.drawable.image1, R.drawable.image2, R.drawable.image2,
-            R.drawable.image1, R.drawable.image2, R.drawable.image2,
+            R.drawable.image1, R.drawable.image2, R.drawable.image3,
+            R.drawable.image1, R.drawable.image2, R.drawable.image3,
+            R.drawable.image1, R.drawable.image2, R.drawable.image3,
+            R.drawable.image1, R.drawable.image2, R.drawable.image3,
+            R.drawable.image1, R.drawable.image2, R.drawable.image3,
+            R.drawable.image1, R.drawable.image2, R.drawable.image3,
     };
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,18 +82,17 @@ public class Gallery extends Fragment {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
+           View GalleryItem=getActivity().getLayoutInflater().inflate(R.layout.gallery_item,null,false);
             ImageView mImageView;
 
-            if (convertView == null) {
-                mImageView = new ImageView(mContext);
-                mImageView.setLayoutParams(new GridView.LayoutParams(400, 400));
+
+                mImageView = GalleryItem.findViewById(R.id.image);
+              /*  mImageView.setLayoutParams(new GridView.LayoutParams(400, 400));
                 mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                mImageView.setPadding(16, 16, 16, 16);
-            } else {
-                mImageView = (ImageView) convertView;
-            }
+                mImageView.setPadding(16, 16, 16, 16);*/
+
             mImageView.setImageResource(imageIDs[position]);
-            return mImageView;
+            return GalleryItem;
         }
     }
 
