@@ -20,11 +20,13 @@ import com.rameshmklll.church.pojos.TeluguBiblePojo;
 public class SqliteController extends SQLiteOpenHelper {
     private static final String LOGCAT = null;
     private static  String DB_PATH = "";
-    private static  String DB_NAME = "androidsqlite.db" ;
+    private static  String DB_NAME = "androidsqlitefinal.db";
     Context context;
 
+
+
     public SqliteController(Context applicationcontext) {
-        super(applicationcontext, DB_NAME, null, 1);
+        super(applicationcontext, DB_NAME, null, 2);
         context = applicationcontext;
         Log.d(LOGCAT, "Created");
         DB_PATH = context.getDatabasePath(DB_NAME).toString();
@@ -33,19 +35,19 @@ public class SqliteController extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         String query1,query2;
-        query1 = "CREATE TABLE IF NOT EXISTS Telugu_Bible( chapter_number INTEGER , book_name TEXT,content TEXT,version_number INTEGER)";
-        query2 = "CREATE TABLE IF NOT EXISTS Almanic(date TEXT,morning_content TEXT,evening_content TEXT)";
-        database.execSQL(query1);
-        database.execSQL(query2);
+//        query1 = "CREATE TABLE IF NOT EXISTS Telugu_Bible( chapter_number INTEGER , book_name TEXT,content TEXT,version_number INTEGER)";
+//        query2 = "CREATE TABLE IF NOT EXISTS Almanic(date TEXT,morning_content TEXT,evening_content TEXT)";
+//        database.execSQL(query1);
+//        database.execSQL(query2);
         Log.d(LOGCAT, "Bible Created");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int version_old, int current_version) {
         String query;
-        query = "DROP TABLE IF EXISTS Students";
-        database.execSQL(query);
-        onCreate(database);
+//        query = "DROP TABLE IF EXISTS Students";
+//        database.execSQL(query);
+      //  onCreate(database);
     }
 
     public void insertStudent(HashMap<String, String> queryValues) {
@@ -124,7 +126,7 @@ public class SqliteController extends SQLiteOpenHelper {
 
 
 
-        String selectQuery = "select DISTINCT book_name from  Telugu_Bible" ;
+        String selectQuery = "select DISTINCT book_name from Telugu_Bible" ;
         Cursor cursor=database.rawQuery(selectQuery,null);
         Log.d("Db_length: ", cursor.getCount()+"" + "Hi");
         if(cursor.moveToFirst()){
@@ -222,7 +224,7 @@ public class SqliteController extends SQLiteOpenHelper {
         }
 
         if(checkDB != null){
-
+  Log.i("pathhhhh",checkDB.getPath());
             checkDB.close();
 
         }
