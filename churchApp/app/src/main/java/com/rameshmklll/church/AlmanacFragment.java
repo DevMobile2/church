@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class AlmanacFragment extends Fragment {
             else
                 newmonth = String.valueOf(month);
             date = newdate + "/" + newmonth + "/" + year;
+            month--;
             // readExcelFileFromAssets();
             getData(date);
         }
@@ -99,14 +101,16 @@ public class AlmanacFragment extends Fragment {
         });
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Almanic");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Almanic");
         getData(DateGetter.getDate());
-        //  new ReadExcel().execute();
+     //    new ReadExcel().execute();
 
     }
 
     public void getData(String date) {
         SqliteController sqliteController = new SqliteController(getActivity());
         HashMap<String, String> data = sqliteController.getAlmanic(date);
+        Log.i("mmmmmmmm",data.get("mornning_content"));
         tvMorning.setText( data.get("mornning_content"));
         tvEvenining.setText(data.get("evening_content"));
         btDate.setText(data.get("date"));
@@ -212,10 +216,11 @@ public class AlmanacFragment extends Fragment {
 
         DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy",
                 Locale.ENGLISH);
-        outputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        outputFormat.setTimeZone(TimeZone.getDefault());
 
         String output = outputFormat.format(date);
         System.out.println(output);
+        Log.i("newwwwwww",output);
         return output;
     }
 

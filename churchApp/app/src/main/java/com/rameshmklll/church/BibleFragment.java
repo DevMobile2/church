@@ -29,7 +29,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.rameshmklll.church.adapters.TeluguBibleAdapter;
 import com.rameshmklll.church.pojos.TeluguBiblePojo;
@@ -77,6 +77,7 @@ public class BibleFragment extends Fragment {
     private HSSFRow myRow;
     SqliteController controller;
     Activity activity;
+    TextView tvTitle,tvChapter;
     public BibleFragment() {
         // Required empty public constructor
     }
@@ -130,6 +131,8 @@ public class BibleFragment extends Fragment {
         controller = new SqliteController(getActivity());
         activity = getActivity();
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        tvTitle= (TextView) view.findViewById(R.id.tvTitle);
+        tvChapter= (TextView) view.findViewById(R.id.tvChapter);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -288,6 +291,9 @@ public class BibleFragment extends Fragment {
             progressBar.dismiss();
             adapter = new TeluguBibleAdapter(data, version, activity);
             recyclerView.setAdapter(adapter);
+            recyclerView.smoothScrollToPosition(version_pos);
+            tvTitle.setText(book_name);
+            tvChapter.setText("Chapter " +chapter);
         }
     }
 
@@ -323,7 +329,8 @@ public class BibleFragment extends Fragment {
 
         Spinner spVersions, spChapters, spBooks;
         Button btSearch;
-
+        ArrayAdapter<String> adapter;
+        ArrayList<String> verse_number;
         public CustomDialogue(@NonNull Context context) {
             super(context);
         }
@@ -342,7 +349,7 @@ public class BibleFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, controller.getBookNames());
+             adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, controller.getBookNames());
 
             spBooks.setAdapter(adapter);
             btSearch = (Button) findViewById(R.id.btnReadExcel1);
@@ -361,11 +368,23 @@ public class BibleFragment extends Fragment {
             }
 
             spBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                private Object versesBasedOnBookNameAndChapter;
+
+
+
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    book_name=adapterView.getSelectedItem().toString();
+                    book_name = adapterView.getSelectedItem().toString();
                     book_name_pos = adapterView.getSelectedItemPosition();
-                    Toast.makeText(getActivity(), book_name, Toast.LENGTH_SHORT).show();
+                    getChaptersAccordingToBookName(book_name);
+                    getVersesBasedOnBookNameAndChapter();
+                }
+
+                private void getChaptersAccordingToBookName(String book_name) {
+                 ArrayList<String> chapter_number=   controller.getChapters(book_name);
+                    final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, chapter_number);
+                    spChapters.setAdapter(adapter);
+
                 }
 
                 @Override
@@ -378,7 +397,7 @@ public class BibleFragment extends Fragment {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     chapter=adapterView.getSelectedItem().toString();
                     chapter_pos = adapterView.getSelectedItemPosition();
-                    Toast.makeText(getActivity(), chapter, Toast.LENGTH_SHORT).show();
+                    getVersesBasedOnBookNameAndChapter();
                 }
 
                 @Override
@@ -401,7 +420,7 @@ public class BibleFragment extends Fragment {
             btSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), book_name + chapter, Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(getActivity(), book_name + chapter, Toast.LENGTH_SHORT).show();
                     dismiss();
                     new GetDataFromDatabase().execute(book_name,chapter, version);
 
@@ -411,7 +430,11 @@ public class BibleFragment extends Fragment {
 
 
         }
-
+        public void getVersesBasedOnBookNameAndChapter() {
+             verse_number=   controller.getVerses(spBooks.getSelectedItem().toString(),spChapters.getSelectedItem().toString());
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, verse_number);
+            spVersions.setAdapter(adapter);
+        }
     }
 
     @Override

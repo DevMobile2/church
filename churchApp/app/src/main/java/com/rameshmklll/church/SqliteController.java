@@ -1,21 +1,21 @@
 package com.rameshmklll.church;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.rameshmklll.church.pojos.TeluguBiblePojo;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import android.database.sqlite.SQLiteException;
-import android.util.Log;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import com.rameshmklll.church.pojos.TeluguBiblePojo;
 
 public class SqliteController extends SQLiteOpenHelper {
     private static final String LOGCAT = null;
@@ -117,11 +117,10 @@ public class SqliteController extends SQLiteOpenHelper {
 
     public ArrayList<String> getBookNames(){
         ArrayList<String> book_names=new ArrayList<>();
-        String path="/data/data/"+context.getPackageName()+"/databases/";
-        String myPath = DB_PATH;
+
 
 //        SQLiteDatabase database = SQLiteDatabase.openDatabase(path+"androidsqlitenew",null, SQLiteDatabase.OPEN_READONLY);//this.getReadableDatabase();
-        SQLiteDatabase database = SQLiteDatabase.openDatabase(myPath,null, SQLiteDatabase.OPEN_READONLY);//this.getReadableDatabase();
+        SQLiteDatabase database = getDatabase();
 
 
 
@@ -135,7 +134,19 @@ public class SqliteController extends SQLiteOpenHelper {
             }
             while (cursor.moveToNext());
         }
+        database.close();
         return  book_names;
+    }
+
+    public SQLiteDatabase getDatabase(){
+
+        String path="/data/data/"+context.getPackageName()+"/databases/";
+        String myPath = DB_PATH;
+
+//        SQLiteDatabase database = SQLiteDatabase.openDatabase(path+"androidsqlitenew",null, SQLiteDatabase.OPEN_READONLY);//this.getReadableDatabase();
+        SQLiteDatabase database = SQLiteDatabase.openDatabase(myPath,null, SQLiteDatabase.OPEN_READONLY);
+        return database;
+
     }
     public HashMap<String,String> getAlmanic(String date){
         HashMap<String,String> data=new HashMap<>();
@@ -153,6 +164,7 @@ public class SqliteController extends SQLiteOpenHelper {
             }
             while (cursor.moveToNext());
         }
+        database.close();
         return  data;
     }
 
@@ -224,7 +236,6 @@ public class SqliteController extends SQLiteOpenHelper {
         }
 
         if(checkDB != null){
-  Log.i("pathhhhh",checkDB.getPath());
             checkDB.close();
 
         }
@@ -233,5 +244,43 @@ public class SqliteController extends SQLiteOpenHelper {
     }
 
 
+    public ArrayList<String> getChapters(String book_name) {
+        ArrayList<String> chapter_numbers=new ArrayList<>();
+
+
+//        SQLiteDatabase database = SQLiteDatabase.openDatabase(path+"androidsqlitenew",null, SQLiteDatabase.OPEN_READONLY);//this.getReadableDatabase();
+        SQLiteDatabase database = getDatabase();
+        String selectQuery = "select DISTINCT chapter_number from Telugu_Bible where book_name='"+book_name+"'" ;
+        Cursor cursor=database.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do {
+                chapter_numbers.add(cursor.getString(0));
+            }
+            while (cursor.moveToNext());
+        }
+        database.close();
+        return  chapter_numbers;
+
+
+    }
+
+    public ArrayList<String> getVerses(String book_name, Object chapter_number) {
+        ArrayList<String> verse_numbers=new ArrayList<>();
+
+
+//        SQLiteDatabase database = SQLiteDatabase.openDatabase(path+"androidsqlitenew",null, SQLiteDatabase.OPEN_READONLY);//this.getReadableDatabase();
+        SQLiteDatabase database = getDatabase();
+        String selectQuery = "select DISTINCT version_number from Telugu_Bible where book_name='"+book_name+"' and chapter_number='"+chapter_number+"' " ;
+        Cursor cursor=database.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do {
+                verse_numbers.add(cursor.getString(0));
+            }
+            while (cursor.moveToNext());
+        }
+        database.close();
+        return  verse_numbers;
+
+    }
 }
 

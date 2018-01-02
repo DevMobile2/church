@@ -26,23 +26,49 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:orientation="horizontal"
         android:weightSum="1">
+
         <TextView
+            android:gravity="center"
             android:id="@+id/wish_id"
-            android:text="Good Morning!! "
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             style="@style/textview_header"
-            android:layout_weight=".3"/>
-        <TextView
-            android:id="@+id/tv_user"
-            android:text="username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".7"
-            style="@style/TextAppearance.AppCompat.Subhead"/>
+            android:layout_weight=".5"
+            android:text="Good Morning!! "
+            android:fontFamily="@font/cedarville_cursive"
+            android:textSize="20sp" />
+
+        <TextView
+            android:gravity="center"
+            android:textSize="20sp"
+            android:id="@+id/tv_user"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:fontFamily="@font/cedarville_cursive"
+            android:text="username" />
     </LinearLayout>
 
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="5dp"
+    >
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Almanac"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     <TextView
         android:text="Morning"
         style="@style/textview_header"
@@ -73,5 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvEvening"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class FirstPage extends Fragment {
         tvEvenining = mv.findViewById(R.id.tvEvening);
         tvMorning = mv.findViewById(R.id.tvMorning);
         carouselView.setPageCount(sampleImages.length);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("CSI Christ church");
         ImageListener imageListener = new ImageListener() {
             @Override
             public void setImageForPosition(int position, ImageView imageView) {

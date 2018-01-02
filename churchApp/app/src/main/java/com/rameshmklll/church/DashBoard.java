@@ -56,6 +56,7 @@ public class DashBoard extends AppCompatActivity
         setContentView(R.layout.activity_dash_board);
          toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         activity= this;
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

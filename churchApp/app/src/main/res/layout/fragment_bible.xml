@@ -3,13 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.rameshmklll.church.BibleFragment">
+<LinearLayout
 
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+    <TextView
+        android:textSize="15sp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:text=""
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/tvTitle"/>
+        <TextView
+            android:textSize="15sp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvChapter"/>
+    </LinearLayout>
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        />
+        android:scrollbars="vertical" />
+</LinearLayout>
 
 </FrameLayout>
