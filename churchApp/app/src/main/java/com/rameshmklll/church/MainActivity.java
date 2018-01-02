@@ -24,7 +24,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
+ import com.google.android.gms.tasks.Tasks;
+ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -199,28 +200,73 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
      private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
          Log.d(TAG, "firebaseAuthWithGooogle:" + acct.getId());
-         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-         mFirebaseAuth.signInWithCredential(credential)
-                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                     @Override
-                     public void onComplete(@NonNull Task<AuthResult> task) {
-                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+         final AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 
-                         // If sign in fails, display a message to the user. If sign in succeeds
-                         // the auth state listener will be notified and logic to handle the
-                         // signed in user can be handled in the listener.
-                         if (!task.isSuccessful()) {
-                             Log.w(TAG, "signInWithCredential ", task.getException());
-                             Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-//                             startActivity(new Intent(MainActivity.this, DashBoard.class));
 
-                         } else {
-                             PreferencesData.putLoggedIn(activity, true);
-                             startActivity(new Intent(MainActivity.this, DashBoard.class));
-                             finish();
-                         }
-                     }
-                 });
+
+        if (mFirebaseUser!=null){
+            mFirebaseAuth.getCurrentUser().linkWithCredential(credential)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "linkWithCredential:success");
+                                FirebaseUser user = task.getResult().getUser();
+                                PreferencesData.putLoggedIn(activity, true);
+                                updateUI(user);
+                                finish();
+                            } else {
+                                Log.w(TAG, "linkWithCredential:failure", task.getException());
+                                Toast.makeText(MainActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+
+                                FirebaseUser prevUser = mFirebaseUser;
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            mFirebaseUser = Tasks.await(mFirebaseAuth.signInWithCredential(credential)).getUser();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                });
+
+                                updateUI(null);
+                            }
+
+                            // ...
+                        }
+                    });
+        }else {
+            mFirebaseAuth.signInWithCredential(credential)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "signInWithCredential ", task.getException());
+                                Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+//                              startActivity(new Intent(MainActivity.this, DashBoard.class));
+
+                            } else {
+                                PreferencesData.putLoggedIn(activity, true);
+                                startActivity(new Intent(MainActivity.this, DashBoard.class));
+                                finish();
+                            }
+                        }
+                    });
+        }
+
+//
+//         FirebaseUser prevUser = mFirebaseUser;
+//         mFirebaseUser = mFirebaseAuth.signInWithCredential(credential).await().getUser();
+
      }
 
 
@@ -228,6 +274,34 @@ import com.google.firebase.auth.GoogleAuthProvider;
          Log.d(TAG, "handleFacebookAccessToken:" + token);
 
          AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+
+if (mFirebaseUser!=null)
+         mFirebaseAuth.getCurrentUser().linkWithCredential(credential)
+                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                     @Override
+                     public void onComplete(@NonNull Task<AuthResult> task) {
+
+
+                         if (task.isSuccessful()) {
+//                             PreferencesData.putProviderType( activity, mFirebaseUser.getProviders().get(0));
+
+                             // Sign in success, update UI with the signed-in user's information
+                             Log.d(TAG, "signInWithCredential:success");
+                             FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                             PreferencesData.putLoggedIn(activity, true);
+                             updateUI(user);
+
+                         } else {
+                             // If sign in fails, display a message to the user.
+                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+                             Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                             updateUI(null);
+                         }
+                     }
+                 });
+else
+
+
          mFirebaseAuth.signInWithCredential(credential)
                  .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                      @Override

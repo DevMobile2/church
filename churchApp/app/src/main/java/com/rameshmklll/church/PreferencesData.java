@@ -16,8 +16,6 @@ public class PreferencesData {
     private static SharedPreferences.Editor editor;
     private static final String IS_LOGGED_IN = "is_logged_in";
 
-
-
     public static synchronized void initPrefs(Context context) {
         if (preferences == null) {
             preferences = context.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
