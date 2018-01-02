@@ -8,46 +8,47 @@
         <item
             android:iconTint="#2196F3"
             android:id="@+id/first_page"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_dashboard"
             android:title="DashBoard" />
         <item
             android:iconTint="#2196F3"
             android:id="@+id/bible"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_library_books"
             android:title="Bible" />
 
         <item
             android:iconTint="#2196F3"
             android:id="@+id/almanac"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_action_calendar_month"
             android:title="Almanac" />
         <item
             android:iconTint="#2196F3"
             android:id="@+id/worship_timings"
-             android:icon="@drawable/ic_menu_camera"
+             android:icon="@drawable/ic_access_time"
             android:title="Worship Timings" />
 
         <item
             android:iconTint="#2196F3"
             android:id="@+id/gallery"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="Gallery" />
         <item
             android:iconTint="#2196F3"
             android:id="@+id/contact"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_contacts"
             android:title="Contact us" />
 
-        <item
-            android:iconTint="#2196F3"
-            android:id="@+id/share"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Share" />
+
         <item
             android:iconTint="#2196F3"
             android:id="@+id/fb"
             android:icon="@drawable/ic_action_facebook"
             android:title="Connect to facebook" />
+        <item
+            android:iconTint="#2196F3"
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Log out" />
 
     </group>
 

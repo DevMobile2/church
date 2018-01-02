@@ -16,8 +16,8 @@ import com.synnapps.carouselview.ImageListener;
 public class ImageFullView extends AppCompatActivity {
 
     private CarouselView carouselView;
-    int[] sampleImages = {R.drawable.c1, R.drawable.c1, R.drawable.c1, R.drawable.c1, R.drawable.c1,
-            R.drawable.mt, R.drawable.mt, R.drawable.mt, R.drawable.mt, R.drawable.mt};
+    int[] sampleImages = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image1, R.drawable.image2,
+            R.drawable.image3};
     private int pos;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

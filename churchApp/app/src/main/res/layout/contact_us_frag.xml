@@ -8,32 +8,36 @@
         android:text="@string/our_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/textview_header"
         android:textSize="@dimen/fab_margin"/>
 
     <TextView
+        android:layout_marginTop="5dp"
+        style="@style/textview_header"
         android:text="@string/church_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Subhead"/>
+      />
 
     <TextView
+        android:layout_marginTop="5dp"
         android:text="@string/road_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Subhead"/>
+        style="@style/textview_header"/>
 
     <TextView
+        android:layout_marginTop="5dp"
         android:text="@string/dist_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Subhead"/>
+        style="@style/textview_header"/>
 
     <TextView
+        android:layout_marginTop="5dp"
         android:text="@string/state_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Subhead"/>
+        style="@style/textview_header"/>
 
     <ImageView
         android:layout_width="match_parent"
@@ -50,14 +54,13 @@
             android:text="@string/office"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/textview_header"
             android:layout_weight=".3"/>
         <TextView
             android:text="@string/num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
-            style="@style/TextAppearance.AppCompat.Subhead"/>
+            style="@style/textview_header"/>
     </LinearLayout>
 
 
@@ -71,7 +74,6 @@
             android:text="@string/wtsapp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/textview_header"
             android:layout_weight=".3"/>
         <TextView
             android:visibility="visible"
@@ -79,7 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
-            style="@style/TextAppearance.AppCompat.Subhead"/>
+            style="@style/textview_header"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -89,18 +91,19 @@
         android:weightSum="1">
 
         <TextView
-            style="@style/textview_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            android:text="@string/email_incharge" />
+            android:text="Email" />
         <TextView
+            android:lineSpacingExtra="10dp"
+            style="@style/textview_header"
             android:layout_marginTop="5dp"
             android:text="esbnath@gmail.com \n csichristchurch1864@gmail.com \n bodapatinaveen12@gmail.com"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            style="@style/TextAppearance.AppCompat.Subhead"/>
+           />
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"

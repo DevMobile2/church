@@ -34,7 +34,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Map dataMap = remoteMessage.getData();
         String count = String.valueOf(dataMap.get("count"));
-        sendNotification(remoteMessage.getNotification().getBody(), remoteMessage.getNotification().getTitle(), count);
+        sendNotification(remoteMessage.getNotification().getBody(), "CSI Christ church"/*remoteMessage.getNotification().getTitle()*/, count);
     }
 
     //This method is only generating push notification

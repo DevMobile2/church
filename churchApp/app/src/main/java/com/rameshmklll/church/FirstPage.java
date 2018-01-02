@@ -1,30 +1,23 @@
 package com.rameshmklll.church;
 
 import android.app.Activity;
-import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
-
+import java.io.IOException;
 import java.sql.Time;
-import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 
 public class FirstPage extends Fragment {
@@ -32,9 +25,10 @@ public class FirstPage extends Fragment {
     Activity activity;
     CarouselView carouselView;
     public String TAG = FirstPage.class.getSimpleName();
-    int[] sampleImages = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4};
+    int[] sampleImages = {R.drawable.image1, R.drawable.image1, R.drawable.image1, R.drawable.image1};
     private String userName;
-    private TextView wish_id;
+    private TextView wish_id,tvEvenining,tvMorning;
+    SqliteController controller;
 
     public FirstPage() {
 
@@ -53,6 +47,8 @@ public class FirstPage extends Fragment {
                              Bundle savedInstanceState) {
         mv = inflater.inflate(R.layout.fragment_first_page, null);
         carouselView = (CarouselView)mv. findViewById(R.id.carouselView);
+        tvEvenining = mv.findViewById(R.id.tvEvening);
+        tvMorning = mv.findViewById(R.id.tvMorning);
         carouselView.setPageCount(sampleImages.length);
         ImageListener imageListener = new ImageListener() {
             @Override
@@ -62,6 +58,7 @@ public class FirstPage extends Fragment {
         };
         carouselView.setImageListener(imageListener);
         activity = getActivity();
+         controller=new SqliteController(getActivity());
         return mv;
     }
 
@@ -70,10 +67,35 @@ public class FirstPage extends Fragment {
         super.onActivityCreated(savedInstanceState);
             TextView name = mv.findViewById(R.id.tv_user);
             wish_id = mv.findViewById(R.id.wish_id);
-            name.setText(userName);
+            if(userName.equalsIgnoreCase("anonymous")){
+                name.setVisibility(View.GONE);
+            }
+            else {
+                name.setText(userName);
+            }
             getCurrentTime();
+            setAlmanicDetails();
     }
 
+    private void setAlmanicDetails() {
+        try {
+
+            controller.createDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        getData(DateGetter.getDate());
+    }
+
+
+    public void getData(String date) {
+        SqliteController sqliteController = new SqliteController(getActivity());
+        HashMap<String, String> data = sqliteController.getAlmanic(date);
+        tvMorning.setText(data.get("mornning_content"));
+        tvEvenining.setText( data.get("evening_content"));
+
+        //  Log.i("dataaaaa",data.get("mornning_content"));
+    }
     private void getCurrentTime() {
         Calendar calendar= Calendar.getInstance();
         Date dat = calendar.getTime();
