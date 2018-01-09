@@ -349,7 +349,6 @@ public class BibleFragment extends Fragment {
                 e.printStackTrace();
             }
 
-             adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, controller.getBookNames());
 
             spBooks.setAdapter(adapter);
             btSearch = (Button) findViewById(R.id.btnReadExcel1);
