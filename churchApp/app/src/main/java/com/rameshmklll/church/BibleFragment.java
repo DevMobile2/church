@@ -34,13 +34,6 @@ import android.widget.TextView;
 import com.rameshmklll.church.adapters.TeluguBibleAdapter;
 import com.rameshmklll.church.pojos.TeluguBiblePojo;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -74,7 +67,7 @@ public class BibleFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private HSSFRow myRow;
+//    private HSSFRow myRow;
     SqliteController controller;
     Activity activity;
     TextView tvTitle,tvChapter;
@@ -163,86 +156,86 @@ public class BibleFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void readExcelFileFromAssets() {
-
-        try {
-            // Creating Input Stream
-   /*
-    * File file = new File( filename); FileInputStream myInput = new
-    * FileInputStream(file);
-    */SqliteController controller = new SqliteController(getActivity());
-            data = new ArrayList<>();
-            adapter.clearDataSet();
-            InputStream myInput;
-            assetManager = getActivity().getAssets();
-
-            //  Don't forget to Change to your assets folder excel sheet
-            myInput = assetManager.open("telugu_bible.xls");
-
-            // Create a POIFSFileSystem object
-            POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
-
-            // Create a workbook using the File System
-            HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
-
-            // Get the first sheet from workbook
-            HSSFSheet mySheet = myWorkBook.getSheetAt(0);
-
-            /** We now need something to iterate through the cells. **/
-            Iterator<Row> rowIter = mySheet.rowIterator();
-            rowIter.next();
-
-
-            while (rowIter.hasNext()) {
-                // HSSFRow  HSSFRowmyRow = (HSSFRow) rowIter.next();
-                myRow = (HSSFRow) rowIter.next();
-                Cell cell_book_name = myRow.getCell(0);
-                Cell cell_chapter = myRow.getCell(1);
-                Cell cell_version = myRow.getCell(3);
-                Cell cell_content = myRow.getCell(2);
-                String book_name=String.valueOf(cell_book_name.getStringCellValue());
-                String chapter_Number= String.valueOf(Double.parseDouble(String.valueOf(cell_chapter.getNumericCellValue())));
-                String chapter_version= String.valueOf(Double.parseDouble(String.valueOf(cell_version.getNumericCellValue())));
-                String content= cell_content.getStringCellValue();
-                HashMap<String,String> map=new HashMap<>();
-                map.put("chapter_number",chapter_Number);
-                map.put("book_name",book_name);
-                map.put("version_number",chapter_version);
-                map.put("content",content);
-                controller.insertStudent(map);
-                Log.i("bookame", cell_book_name.getStringCellValue()+"and"+book_name+chapter+"and"+chapter);
-              /*  if (String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name) *//*&& chapter_Number.equalsIgnoreCase(chapter)*//*) {
-                    Log.i("teluguu", String.valueOf(cell_book_name.getStringCellValue()));
-                    match = true;
-                    Cell cell_content = myRow.getCell(2);
-                    String content = String.valueOf(cell_content.getStringCellValue());
-                    int id = (int) cell_version.getNumericCellValue();
-                    Log.i("chapters", String.valueOf(cell_chapter.getNumericCellValue()));
-                    TeluguBiblePojo teluguBiblePojo = new TeluguBiblePojo(content, id);
-                    data.add(teluguBiblePojo);
-
-                }*/
-
-
-
-
-            //    Iterator<Cell> cellIter = myRow.cellIterator();
-//                while (cellIter.hasNext()) {
-//                    HSSFCell myCell = (HSSFCell) cellIter.next();
-//                  Log.i( "cell content", myCell.getStringCellValue()  );
-//                    Log.e("FileUtils", "Cell Value: " + myCell.toString()+ " Index :" +myCell.getColumnIndex());
-//                    // Toast.makeText(getApplicationContext(), "cell Value: " +
-//                    // myCell.toString(), Toast.LENGTH_SHORT).show();
-//                }
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return;
-    }
+//    public void readExcelFileFromAssets() {
+//
+//        try {
+//            // Creating Input Stream
+//   /*
+//    * File file = new File( filename); FileInputStream myInput = new
+//    * FileInputStream(file);
+//    */SqliteController controller = new SqliteController(getActivity());
+//            data = new ArrayList<>();
+//            adapter.clearDataSet();
+//            InputStream myInput;
+//            assetManager = getActivity().getAssets();
+//
+//            //  Don't forget to Change to your assets folder excel sheet
+//            myInput = assetManager.open("telugu_bible.xls");
+//
+//            // Create a POIFSFileSystem object
+//            POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
+//
+//            // Create a workbook using the File System
+//            HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
+//
+//            // Get the first sheet from workbook
+//            HSSFSheet mySheet = myWorkBook.getSheetAt(0);
+//
+//            /** We now need something to iterate through the cells. **/
+//            Iterator<Row> rowIter = mySheet.rowIterator();
+//            rowIter.next();
+//
+//
+//            while (rowIter.hasNext()) {
+//                // HSSFRow  HSSFRowmyRow = (HSSFRow) rowIter.next();
+//                myRow = (HSSFRow) rowIter.next();
+//                Cell cell_book_name = myRow.getCell(0);
+//                Cell cell_chapter = myRow.getCell(1);
+//                Cell cell_version = myRow.getCell(3);
+//                Cell cell_content = myRow.getCell(2);
+//                String book_name=String.valueOf(cell_book_name.getStringCellValue());
+//                String chapter_Number= String.valueOf(Double.parseDouble(String.valueOf(cell_chapter.getNumericCellValue())));
+//                String chapter_version= String.valueOf(Double.parseDouble(String.valueOf(cell_version.getNumericCellValue())));
+//                String content= cell_content.getStringCellValue();
+//                HashMap<String,String> map=new HashMap<>();
+//                map.put("chapter_number",chapter_Number);
+//                map.put("book_name",book_name);
+//                map.put("version_number",chapter_version);
+//                map.put("content",content);
+//                controller.insertStudent(map);
+//                Log.i("bookame", cell_book_name.getStringCellValue()+"and"+book_name+chapter+"and"+chapter);
+//              /*  if (String.valueOf(cell_book_name.getStringCellValue()).equalsIgnoreCase(book_name) *//*&& chapter_Number.equalsIgnoreCase(chapter)*//*) {
+//                    Log.i("teluguu", String.valueOf(cell_book_name.getStringCellValue()));
+//                    match = true;
+//                    Cell cell_content = myRow.getCell(2);
+//                    String content = String.valueOf(cell_content.getStringCellValue());
+//                    int id = (int) cell_version.getNumericCellValue();
+//                    Log.i("chapters", String.valueOf(cell_chapter.getNumericCellValue()));
+//                    TeluguBiblePojo teluguBiblePojo = new TeluguBiblePojo(content, id);
+//                    data.add(teluguBiblePojo);
+//
+//                }*/
+//
+//
+//
+//
+//            //    Iterator<Cell> cellIter = myRow.cellIterator();
+////                while (cellIter.hasNext()) {
+////                    HSSFCell myCell = (HSSFCell) cellIter.next();
+////                  Log.i( "cell content", myCell.getStringCellValue()  );
+////                    Log.e("FileUtils", "Cell Value: " + myCell.toString()+ " Index :" +myCell.getColumnIndex());
+////                    // Toast.makeText(getApplicationContext(), "cell Value: " +
+////                    // myCell.toString(), Toast.LENGTH_SHORT).show();
+////                }
+//            }
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return;
+//    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -312,7 +305,7 @@ public class BibleFragment extends Fragment {
 
         @Override
         protected Void doInBackground(String... strings) {
-            readExcelFileFromAssets();
+//            readExcelFileFromAssets();
             return null;
         }
 

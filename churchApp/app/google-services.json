@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "540727913701-m88trs4c7fqsf2rfjadl97uiobabk96j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rameshmklll.church",
+            "certificate_hash": "c2ec0873bb6a6d6e394bb01538a891edd2faee27"
+          }
+        },
+        {
           "client_id": "540727913701-9ipm12spr6bfp1pu6pon96u4frjd4kvk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

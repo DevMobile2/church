@@ -74,7 +74,6 @@ public class SqliteController extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("StudentName", queryValues.get("StudentName"));
         return database.update("Students", values, "StudentId" + " = ?", new String[]{queryValues.get("StudentId")}); //String updateQuery = "Update words set txtWord='"+word+"' where txtWord='"+ oldWord +"'"; //Log.d(LOGCAT,updateQuery); //database.rawQuery(updateQuery, null); //return database.update("words", values, "txtWord = ?", new String[] { word }); } public void deleteStudent(String id) { Log.d(LOGCAT,"delete"); SQLiteDatabase database = this.getWritableDatabase();	String deleteQuery = "DELETE FROM Students where StudentId='"+ id +"'"; Log.d("query",deleteQuery);	database.execSQL(deleteQuery); } public ArrayList<HashMap<String, String>> getAllStudents() { ArrayList<HashMap<String, String>> wordList; wordList = new ArrayList<HashMap<String, String>>(); String selectQuery = "SELECT * FROM Students"; SQLiteDatabase database = this.getWritableDatabase(); Cursor cursor = database.rawQuery(selectQuery, null); if (cursor.moveToFirst()) { do { HashMap<String, String> map = new HashMap<String, String>(); map.put("StudentId", cursor.getString(0)); map.put("StudentName", cursor.getString(1)); wordList.add(map); } while (cursor.moveToNext()); } // return contact list return wordList; } public HashMap<String, String> getStudentInfo(String id) { HashMap<String, String> wordList = new HashMap<String, String>(); SQLiteDatabase database = this.getReadableDatabase(); String selectQuery = "SELECT * FROM Students where StudentId='"+id+"'"; Cursor cursor = database.rawQuery(selectQuery, null); if (cursor.moveToFirst()) { do { //HashMap<String, String> map = new HashMap<String, String>(); wordList.put("StudentName", cursor.getString(1)); //wordList.add(map); } while (cursor.moveToNext()); }	return wordList; }	}
-
     }
 
     public ArrayList<HashMap<String, String>> getAllStudents() {
@@ -121,8 +120,6 @@ public class SqliteController extends SQLiteOpenHelper {
 
 //        SQLiteDatabase database = SQLiteDatabase.openDatabase(path+"androidsqlitenew",null, SQLiteDatabase.OPEN_READONLY);//this.getReadableDatabase();
         SQLiteDatabase database = getDatabase();
-
-
 
 
         String selectQuery = "select DISTINCT book_name from Telugu_Bible" ;
