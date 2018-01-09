@@ -17,13 +17,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -45,7 +38,7 @@ public class AlmanacFragment extends Fragment {
     String date;
     TextView tvMorning, tvEvenining;
     private int year, month, day;
-    private HSSFRow myRow;
+//    private HSSFRow myRow;
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
@@ -117,87 +110,87 @@ public class AlmanacFragment extends Fragment {
         //  Log.i("dataaaaa",data.get("mornning_content"));
     }
 
-    public void readExcelFileFromAssets() {
-
-        try {
-            // Creating Input Stream
-   /*
-    * File file = new File( filename); FileInputStream myInput = new
-    * FileInputStream(file);
-    */
-            SqliteController sqliteController = new SqliteController(getActivity());
-            AssetManager assetManager = getActivity().getAssets();
-            InputStream myInput;
-            assetManager = getActivity().getAssets();
-
-            //  Don't forget to Change to your assets folder excel sheet
-            myInput = assetManager.open("AlmanacFinal.xls");
-
-            // Create a POIFSFileSystem object
-            POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
-
-            // Create a workbook using the File System
-            HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
-
-            // Get the first sheet from workbook
-            HSSFSheet mySheet = myWorkBook.getSheetAt(0);
-
-            /** We now need something to iterate through the cells. **/
-            Iterator<Row> rowIter = mySheet.rowIterator();
-            rowIter.next();
-
-
-            while (rowIter.hasNext()) {
-                // HSSFRow  HSSFRowmyRow = (HSSFRow) rowIter.next();
-                myRow = (HSSFRow) rowIter.next();
-                Cell cell_date = myRow.getCell(0);
-                Cell cell_morning = myRow.getCell(2);
-                Cell cell_evening = myRow.getCell(3);
-                String unformattedDate = String.valueOf(cell_date.getDateCellValue());
-                String morning_content = String.valueOf(cell_morning.getStringCellValue());
-                String evening_content = String.valueOf(cell_evening.getStringCellValue());
-                String date_new = getFormattedDate(String.valueOf(cell_date.getDateCellValue()));
-                HashMap<String, String> map = new HashMap<>();
-                map.put("date", date_new);
-                map.put("morning_content", morning_content);
-                map.put("evening_content", evening_content);
-                sqliteController.insertAlmanic(map);
-//                if(unformattedDate!="null") {
-//                    String date_new =getFormattedDate(String.valueOf(cell_date.getDateCellValue()));
+//    public void readExcelFileFromAssets() {
 //
-//                   // Log.i("cell_datessss", getFormattedDate(date));
-//                    Log.i("date1",date);
-//                    Log.i("date2",date_new);
-//                    if( date_new.equalsIgnoreCase(date)   ){
+//        try {
+//            // Creating Input Stream
+//   /*
+//    * File file = new File( filename); FileInputStream myInput = new
+//    * FileInputStream(file);
+//    */
+//            SqliteController sqliteController = new SqliteController(getActivity());
+//            AssetManager assetManager = getActivity().getAssets();
+//            InputStream myInput;
+//            assetManager = getActivity().getAssets();
+//
+//            //  Don't forget to Change to your assets folder excel sheet
+//            myInput = assetManager.open("AlmanacFinal.xls");
+//
+//            // Create a POIFSFileSystem object
+//            POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
+//
+//            // Create a workbook using the File System
+//            HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
+//
+//            // Get the first sheet from workbook
+//            HSSFSheet mySheet = myWorkBook.getSheetAt(0);
+//
+//            /** We now need something to iterate through the cells. **/
+//            Iterator<Row> rowIter = mySheet.rowIterator();
+//            rowIter.next();
 //
 //
-//                        String morning_content=String.valueOf(cell_morning.getStringCellValue());
-//                        String evening_content= String.valueOf(cell_evening .getStringCellValue());
-//                        Log.i("content1", morning_content);
-//                        Log.i("content2", evening_content);
-//                    }
-//                    else{
+//            while (rowIter.hasNext()) {
+//                // HSSFRow  HSSFRowmyRow = (HSSFRow) rowIter.next();
+//                myRow = (HSSFRow) rowIter.next();
+//                Cell cell_date = myRow.getCell(0);
+//                Cell cell_morning = myRow.getCell(2);
+//                Cell cell_evening = myRow.getCell(3);
+//                String unformattedDate = String.valueOf(cell_date.getDateCellValue());
+//                String morning_content = String.valueOf(cell_morning.getStringCellValue());
+//                String evening_content = String.valueOf(cell_evening.getStringCellValue());
+//                String date_new = getFormattedDate(String.valueOf(cell_date.getDateCellValue()));
+//                HashMap<String, String> map = new HashMap<>();
+//                map.put("date", date_new);
+//                map.put("morning_content", morning_content);
+//                map.put("evening_content", evening_content);
+//                sqliteController.insertAlmanic(map);
+////                if(unformattedDate!="null") {
+////                    String date_new =getFormattedDate(String.valueOf(cell_date.getDateCellValue()));
+////
+////                   // Log.i("cell_datessss", getFormattedDate(date));
+////                    Log.i("date1",date);
+////                    Log.i("date2",date_new);
+////                    if( date_new.equalsIgnoreCase(date)   ){
+////
+////
+////                        String morning_content=String.valueOf(cell_morning.getStringCellValue());
+////                        String evening_content= String.valueOf(cell_evening .getStringCellValue());
+////                        Log.i("content1", morning_content);
+////                        Log.i("content2", evening_content);
+////                    }
+////                    else{
+////
+////                    }
+////                }
 //
-//                    }
-//                }
-
-
-                Iterator<Cell> cellIter = myRow.cellIterator();
-//                while (cellIter.hasNext()) {
-//                    HSSFCell myCell = (HSSFCell) cellIter.next();
-//                  Log.i( "cell content", myCell.getStringCellValue()  );
-//                    Log.e("FileUtils", "Cell Value: " + myCell.toString()+ " Index :" +myCell.getColumnIndex());
-//                    // Toast.makeText(getApplicationContext(), "cell Value: " +
-//                    // myCell.toString(), Toast.LENGTH_SHORT).show();
-//                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return;
-    }
+//
+//                Iterator<Cell> cellIter = myRow.cellIterator();
+////                while (cellIter.hasNext()) {
+////                    HSSFCell myCell = (HSSFCell) cellIter.next();
+////                  Log.i( "cell content", myCell.getStringCellValue()  );
+////                    Log.e("FileUtils", "Cell Value: " + myCell.toString()+ " Index :" +myCell.getColumnIndex());
+////                    // Toast.makeText(getApplicationContext(), "cell Value: " +
+////                    // myCell.toString(), Toast.LENGTH_SHORT).show();
+////                }
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return;
+//    }
 
     String getFormattedDate(String input) {
 
@@ -237,7 +230,7 @@ public class AlmanacFragment extends Fragment {
 
         @Override
         protected Void doInBackground(String... strings) {
-            readExcelFileFromAssets();
+//            readExcelFileFromAssets();
             return null;
         }
 
