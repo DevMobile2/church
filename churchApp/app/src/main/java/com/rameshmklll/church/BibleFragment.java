@@ -17,7 +17,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,10 +34,7 @@ import com.rameshmklll.church.adapters.TeluguBibleAdapter;
 import com.rameshmklll.church.pojos.TeluguBiblePojo;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 
 /**
@@ -323,7 +319,8 @@ public class BibleFragment extends Fragment {
         Spinner spVersions, spChapters, spBooks;
         Button btSearch;
         ArrayAdapter<String> adapter;
-        ArrayList<String> verse_number;
+        ArrayList<String> verse_number=new ArrayList<>();
+        ArrayList<String> books=new ArrayList<>();
         public CustomDialogue(@NonNull Context context) {
             super(context);
         }
@@ -342,7 +339,8 @@ public class BibleFragment extends Fragment {
                 e.printStackTrace();
             }
 
-
+            books=controller.getBookNames();
+          adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, books);
             spBooks.setAdapter(adapter);
             btSearch = (Button) findViewById(R.id.btnReadExcel1);
 
@@ -373,7 +371,7 @@ public class BibleFragment extends Fragment {
                 }
 
                 private void getChaptersAccordingToBookName(String book_name) {
-                 ArrayList<String> chapter_number=   controller.getChapters(book_name);
+                     ArrayList<String> chapter_number=   controller.getChapters(book_name);
                     final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, chapter_number);
                     spChapters.setAdapter(adapter);
 
@@ -418,8 +416,6 @@ public class BibleFragment extends Fragment {
 
                 }
             });
-
-
 
         }
         public void getVersesBasedOnBookNameAndChapter() {

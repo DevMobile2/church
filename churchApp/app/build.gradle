@@ -55,5 +55,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:11.6.2'
     // this line must be included to integrate with Firebase
     compile 'com.google.firebase:firebase-messaging:11.6.2'
+    compile 'com.google.android.gms:play-services-maps:11.6.2'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }
 apply plugin: 'com.google.gms.google-services'

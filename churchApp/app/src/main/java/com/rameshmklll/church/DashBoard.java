@@ -2,8 +2,11 @@ package com.rameshmklll.church;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -92,8 +95,11 @@ public class DashBoard extends AppCompatActivity
             tv_user.setText(mUsername);
             tv_email.setText(mFirebaseUser.getEmail());
             if (mFirebaseUser.getPhotoUrl() != null) {
-                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
 
+                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this); // 0 - for private mode
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("photo_url",mPhotoUrl);
                 setProfilePic(mPhotoUrl);
 
             }
@@ -266,8 +272,14 @@ public class DashBoard extends AppCompatActivity
                     .addToBackStack("Gallery").commit();
         }
         else if(id==R.id.fb){
-        Intent intent=getOpenFacebookIntent(this);
-           startActivity(intent);
+
+
+            Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+            String facebookUrl = getFacebookPageURL(this);
+            facebookIntent.setData(Uri.parse(facebookUrl));
+            startActivity(facebookIntent);
+     /*   Intent intent=getOpenFacebookIntent(this);
+           startActivity(intent);*/
 
            /* Intent intent = new Intent("android.intent.category.LAUNCHER");
             intent.setClassName("com.facebook.katana", "com.facebook.katana.LoginActivity");
@@ -280,6 +292,25 @@ public class DashBoard extends AppCompatActivity
         titles.add(title);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+
+    public static String FACEBOOK_URL = "https://www.facebook.com/csichristchurcheluru";
+    public static String FACEBOOK_PAGE_ID = "csichristchurcheluru";
+
+    //method to get the right URL to use in the intent
+    public String getFacebookPageURL(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) { //newer versions of fb app
+                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+            } else { //older versions of fb app
+                return "fb://page/" + FACEBOOK_PAGE_ID;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return FACEBOOK_URL; //normal web url
+        }
     }
 
 

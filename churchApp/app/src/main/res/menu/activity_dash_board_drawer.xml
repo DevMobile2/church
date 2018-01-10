@@ -9,7 +9,7 @@
             android:iconTint="#2196F3"
             android:id="@+id/first_page"
             android:icon="@drawable/ic_dashboard"
-            android:title="DashBoard" />
+            android:title="Home" />
         <item
             android:iconTint="#2196F3"
             android:id="@+id/bible"
