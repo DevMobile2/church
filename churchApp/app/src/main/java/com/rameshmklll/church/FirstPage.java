@@ -151,23 +151,29 @@ public class FirstPage extends Fragment {
 
         Time time = new Time(System.currentTimeMillis());
         int hours = time.getHours();
-
+         String wish_message;
 //        Log.d(TAG, hours+", ");
         if (hours<12){
-            wish_id.setText("Good Morning");
+            wish_message="Good Morning";
         }else if (hours>=12 && hours<5){
-            wish_id.setText("Good AfterNoon");
+            wish_message="Good AfterNoon";
+
         }else {
-            wish_id.setText("Good Evening");
+            wish_message="Good Evening";
+
         }
 
         if (mnth_date.equalsIgnoreCase("Dec25")){
-            wish_id.setText("Happy Christmas");
+            wish_message="Happy Christmas";
+
         }else if (mnth_date.equalsIgnoreCase("Jan01")){
-            wish_id.setText("Happy NewYear!");
+            wish_message="Happy NewYear";
+
         }else if (mnth_date.equalsIgnoreCase("Dec19")){
-            wish_id.setText("Happy BirthDay");
+            wish_message="Happy BirthDay";
+
         }
+        wish_id.setText(wish_message+" "+userName);
 
     }
 
