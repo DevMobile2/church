@@ -57,6 +57,7 @@ public class FirstPage extends Fragment {
         carouselView = (CarouselView)mv. findViewById(R.id.carouselView);
         tvEvenining = mv.findViewById(R.id.tvEvening);
         tvMorning = mv.findViewById(R.id.tvMorning);
+        wish_id=mv.findViewById(R.id.wish_id);
         tvDate = mv.findViewById(R.id.tvDate);
         tvDay = mv.findViewById(R.id.tvDay);
         iv_profile=mv.findViewById(R.id.iv_profile);
@@ -77,15 +78,6 @@ public class FirstPage extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-            TextView name = mv.findViewById(R.id.tv_user);
-            wish_id = mv.findViewById(R.id.wish_id);
-            if(userName.equalsIgnoreCase("anonymous")){
-                name.setVisibility(View.GONE);
-            }
-            else {
-                name.setText(userName);
-            }
-
             setImage();
             getCurrentTime();
             setAlmanicDetails();

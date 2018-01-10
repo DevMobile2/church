@@ -198,9 +198,6 @@ public class DashBoard extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.sign_out_menu:
-              performLogout();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
