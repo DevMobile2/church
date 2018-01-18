@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,6 +129,11 @@ public class FirstPage extends Fragment {
         //  Log.i("dataaaaa",data.get("mornning_content"));
     }
     private void getCurrentTime() {
+
+        byte[] sha1 = {
+                (byte)0xB2, 0x60, 0x78, 0x4B, (byte)0xBE, 0x6B, (byte)0xD2, 0x4D, 0x43, 0x38,     (byte)0xFB, 0x6A, 0x2F, 0x52, 0x00, 0x61, 0x3E, 0x34, 0x5E, 0x74
+        };
+        Log.e("keyhash", Base64.encodeToString(sha1, Base64.NO_WRAP));
         Calendar calendar= Calendar.getInstance();
         Date dat = calendar.getTime();
 //        Log.d(TAG, dat+"");
